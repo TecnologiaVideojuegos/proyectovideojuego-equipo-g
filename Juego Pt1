@@ -1,0 +1,198 @@
+import arcade
+import random
+import os
+import PIL
+from arcade.draw_commands import Texture
+
+SPRITE_SCALING_NAVE = 0.2
+SPRITE_SCALING_ENEMY = 0.075
+SPRITE_SCALING_BULLET = 0.5
+MOVEMENT_SPEED = 3
+ENEMY_COUNT = 50
+VIEWPORT_MARGIN = 40
+SCREEN_WIDTH = 1200
+SCREEN_HEIGHT = 800
+SCREEN_TITLE = "HOLLOW RIDERS"
+
+BULLET_SPEED = 5
+
+def bordes():
+    """" Los bordes para poner imagenes en ellos la puntuacion etc """
+    arcade.draw_lrtb_rectangle_filled(0, 200, 800, 0, arcade.csscolor.BLUE)
+    arcade.draw_lrtb_rectangle_filled(1000, 1200, 800, 0, arcade.csscolor.BLUE)
+
+class Explosion(arcade.Sprite):
+    """Esta clase creara una explosion de forma animada"""
+    def __init__(self, texture_list):
+        super().__init__()
+        self.current_texture = 0
+        self.textures = texture_list
+    def update(self):
+        self.current_texture += 1
+        if self.current_texture < len(self.textures):
+            self.set_texture(self.current_texture)
+        else:
+            self.remove_from_sprite_lists()
+
+class nave(arcade.Sprite):
+    def update(self):
+        """Las cordenadas x e y que vayan variando segun su posicion y los limites a los que puede llegar la nave"""
+        self.center_x += self.change_x
+        self.center_y += self.change_y
+
+        if self.left < 201:
+            self.left = 201
+        elif self.right > 1000 - 1:
+            self.right = 1000 - 1
+        if self.bottom < 0:
+            self.bottom = 0
+        elif self.top > 400 - 1:
+            self.top = 400 - 1
+
+class MyGame(arcade.Window):
+    def __init__(self):
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, fullscreen= True)
+        """La biblioteca "os" permite localizar archivos lo que permmite importar imagenes mas facilmente"""
+        file_path = os.path.dirname(os.path.abspath(__file__))
+        os.chdir(file_path)
+
+        """Parte de la programacion para pantalla completa"""
+        width, height = self.get_size()
+        self.set_viewport(0, width, 0, height)
+
+        self.nave_list = None
+        self.enemy_list = None
+        self.bullet_list = None
+        self.nave_sprite = None
+        self.explosions_list = None
+        self.score = 0
+        """Para que no moleste el raton mientras juegas"""
+        self.set_mouse_visible(False)
+
+        self.explosion_texture_list = []
+        columns = 16
+        count = 60
+        sprite_width = 256
+        sprite_height = 256
+        explosion = ":resources:images/spritesheets/explosion.png"
+        self.explosion_texture_list = arcade.load_spritesheet(explosion, sprite_width, sprite_height, columns, count)
+
+
+        self.gun_sound = arcade.load_sound(":resources:sounds/hurt5.wav")
+        self.hit_sound = arcade.load_sound(":resources:sounds/hit5.wav")
+
+        arcade.set_background_color(arcade.color.BLACK)
+
+    def setup(self):
+        self.nave_list = arcade.SpriteList()
+        self.enemy_list = arcade.SpriteList()
+        self.bullet_list = arcade.SpriteList()
+        self.explosions_list = arcade.SpriteList()
+        self.score = 0
+        self.nave_sprite = arcade.Sprite(":resources:images/practicas/nave.png", SPRITE_SCALING_NAVE)
+        self.nave_sprite.center_x = 600
+        self.nave_sprite.center_y = 75
+        self.nave_list.append(self.nave_sprite)
+
+        for i in range(ENEMY_COUNT):
+            """Aparicion de enemigos en posiciones randomizadas dentro de unas cordenadas"""
+            enemy = arcade.Sprite(":resources:images/practicas/enemy.png", SPRITE_SCALING_ENEMY)
+            enemy.center_x = random.randrange(340, 840)
+            enemy.center_y = random.randrange(400, SCREEN_HEIGHT)
+            self.enemy_list.append(enemy)
+        arcade.set_background_color(arcade.color.BLACK)
+
+    def on_draw(self):
+        arcade.start_render()
+
+        bordes()
+        self.enemy_list.draw()
+        self.bullet_list.draw()
+        self.nave_list.draw()
+        self.explosions_list.draw()
+        """El sistema de puntuaciones"""
+        arcade.draw_text(f"Score: {self.score}" , 10, 20, arcade.color.WHITE, 14)
+
+    def on_key_press(self, key, modifiers):
+        """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
+        if key == arcade.key.W:
+            self.nave_sprite.change_y = MOVEMENT_SPEED
+        elif key == arcade.key.S:
+            self.nave_sprite.change_y = -MOVEMENT_SPEED
+        elif key == arcade.key.A:
+            self.nave_sprite.change_x = -MOVEMENT_SPEED
+        elif key == arcade.key.D:
+            self.nave_sprite.change_x = MOVEMENT_SPEED
+
+        if key == arcade.key.UP:
+            self.nave_sprite.change_y = MOVEMENT_SPEED
+        elif key == arcade.key.DOWN:
+            self.nave_sprite.change_y = -MOVEMENT_SPEED
+        elif key == arcade.key.LEFT:
+            self.nave_sprite.change_x = -MOVEMENT_SPEED
+        elif key == arcade.key.RIGHT:
+            self.nave_sprite.change_x = MOVEMENT_SPEED
+        """Pantalla completa"""
+        if key == arcade.key.V:
+            self.set_fullscreen(not self.fullscreen)
+            width, height = self.get_size()
+            self.set_viewport(0, width, 0, height)
+        """Modo ventana"""
+        if key == arcade.key.B:
+            self.set_fullscreen(not self.fullscreen)
+            self.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
+
+    def on_key_release(self, key, modifiers):
+        if key == arcade.key.W or key == arcade.key.S:
+            self.nave_sprite.change_y = 0
+        elif key == arcade.key.A or key == arcade.key.D:
+            self.nave_sprite.change_x = 0
+
+        if key == arcade.key.UP or key == arcade.key.DOWN:
+            self.nave_sprite.change_y = 0
+        elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
+            self.nave_sprite.change_x = 0
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        """Sistema de disparo totalmente vertical que se ejecuta si pulsas el boton izq del raton"""
+        arcade.play_sound(self.gun_sound)
+        bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
+        bullet.angle = 90
+        bullet.change_y = BULLET_SPEED
+        bullet.center_x = self.nave_sprite.center_x
+        bullet.bottom = self.nave_sprite.top
+        self.bullet_list.append(bullet)
+
+    def on_update(self, delta_time):
+        self.bullet_list.update()
+        self.nave_list.update()
+        self.explosions_list.update()
+        """Para que la bala no atraviese objetivos y si das a un objetivo que te sume un punto"""
+        for bullet in self.bullet_list:
+            hit_list = arcade.check_for_collision_with_list(bullet, self.enemy_list)
+            if len(hit_list) > 0:
+                explosion = Explosion(self.explosion_texture_list)
+                explosion.center_x = hit_list[0].center_x
+                explosion.center_y = hit_list[0].center_y
+                explosion.update()
+                self.explosions_list.append(explosion)
+                bullet.remove_from_sprite_lists()
+            for enemy in hit_list:
+                enemy.remove_from_sprite_lists()
+                self.score +=1
+                arcade.play_sound(self.hit_sound)
+            if bullet.bottom > SCREEN_HEIGHT:
+                bullet.remove_from_sprite_lists()
+        """Para ir intercalando pantalla completa y modo ventana"""
+        left, screen_width, bottom, screen_height = self.get_viewport()
+        text_size = 7
+        arcade.draw_text("Pulsa V para poner el modo de pantalla completa", screen_width // 2, screen_height // 2 - 20, arcade.color.WHITE, text_size, anchor_x="center")
+        arcade.draw_text("Pulsa B para poner el modo ventana", screen_width // 2, screen_height // 2 + 20, arcade.color.WHITE, text_size, anchor_x="center")
+
+def main():
+    window = MyGame()
+    window.setup()
+    arcade.run()
+
+if __name__ == "__main__":
+    main()
