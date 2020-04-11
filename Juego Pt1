@@ -11,10 +11,15 @@ ENEMY_COUNT = 10
 VIEWPORT_MARGIN = 40
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 800
-VIDAS = 3
 SCREEN_TITLE = "HOLLOW RIDERS"
+"""Para que no se sobrecargue todo de balas he puesto que haya un limite de balas en pantalla"""
+MAX_PLAYER_BULLETS = 10
+BULLET_SPEED = 6
 
-BULLET_SPEED = 5
+"""Estado del juego"""
+GAME_OVER = 1
+PLAY_GAME = 0
+
 
 def bordes():
     """" Los bordes para poner imagenes en ellos la puntuacion etc """
@@ -40,6 +45,7 @@ class nave(arcade.Sprite):
         self.center_x += self.change_x
         self.center_y += self.change_y
 
+        """Sistema de margenes que hay que implementar"""
         if self.left < 201:
             self.left = 201
         elif self.right > 1000 - 1:
@@ -60,6 +66,8 @@ class MyGame(arcade.Window):
         width, height = self.get_size()
         self.set_viewport(0, width, 0, height)
 
+        self.game_state = PLAY_GAME
+
         self.frame_count = 0
 
         self.nave_list = None
@@ -69,14 +77,16 @@ class MyGame(arcade.Window):
         self.explosions_list = None
         self.enemybullet_list = None
         self.score = 0
+        self.Vidas = 3
         """Para que no moleste el raton mientras juegas"""
         self.set_mouse_visible(False)
 
+        """Tamaño de la explosion cuando derribas una nave"""
         self.explosion_texture_list = []
-        columns = 16
-        count = 60
-        sprite_width = 256
-        sprite_height = 256
+        columns = 15
+        count = 59
+        sprite_width = 250
+        sprite_height = 250
         explosion = ":resources:images/spritesheets/explosion.png"
         self.explosion_texture_list = arcade.load_spritesheet(explosion, sprite_width, sprite_height, columns, count)
 
@@ -92,6 +102,7 @@ class MyGame(arcade.Window):
         self.enemybullet_list = arcade.SpriteList()
         self.bullet_list = arcade.SpriteList()
         self.explosions_list = arcade.SpriteList()
+        self.Vidas = 3
         self.score = 0
         self.nave_sprite = arcade.Sprite(":resources:images/practicas/nave.png", SPRITE_SCALING_NAVE)
         self.nave_sprite.center_x = 600
@@ -115,8 +126,13 @@ class MyGame(arcade.Window):
         self.nave_list.draw()
         self.enemybullet_list.draw()
         self.explosions_list.draw()
-        """El sistema de puntuaciones"""
+        """El sistema de puntuaciones y de vida"""
         arcade.draw_text(f"Score: {self.score}" , 10, 20, arcade.color.WHITE, 14)
+        arcade.draw_text(f"Vidas: {self.Vidas}" , 10, 40, arcade.color.WHITE, 14)
+
+        if self.game_state == GAME_OVER:
+            arcade.draw_text(f"GAME OVER", 250, 300, arcade.color.WHITE, 55)
+            self.set_mouse_visible(True)
 
     def on_key_press(self, key, modifiers):
         """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
@@ -147,6 +163,7 @@ class MyGame(arcade.Window):
             self.set_fullscreen(not self.fullscreen)
             self.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
 
+
     def on_key_release(self, key, modifiers):
         if key == arcade.key.W or key == arcade.key.S:
             self.nave_sprite.change_y = 0
@@ -160,13 +177,14 @@ class MyGame(arcade.Window):
 
     def on_mouse_press(self, x, y, button, modifiers):
         """Sistema de disparo totalmente vertical que se ejecuta si pulsas el boton izq del raton"""
-        arcade.play_sound(self.gun_sound)
-        bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
-        bullet.angle = 90
-        bullet.change_y = BULLET_SPEED
-        bullet.center_x = self.nave_sprite.center_x
-        bullet.bottom = self.nave_sprite.top
-        self.bullet_list.append(bullet)
+        if len(self.bullet_list) < MAX_PLAYER_BULLETS:
+            arcade.play_sound(self.gun_sound)
+            bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
+            bullet.angle = 90
+            bullet.change_y = BULLET_SPEED
+            bullet.center_x = self.nave_sprite.center_x
+            bullet.bottom = self.nave_sprite.top
+            self.bullet_list.append(bullet)
 
     def on_update(self, delta_time):
         self.frame_count += 1
@@ -183,6 +201,7 @@ class MyGame(arcade.Window):
                 explosion.update()
                 self.explosions_list.append(explosion)
                 bullet.remove_from_sprite_lists()
+            """Para que cuando mates a un enemigo desaparezca la bala y no siga"""
             for enemy1 in hit_list:
                 enemy1.remove_from_sprite_lists()
                 self.score +=1
@@ -190,6 +209,7 @@ class MyGame(arcade.Window):
             if bullet.bottom > SCREEN_HEIGHT:
                 bullet.remove_from_sprite_lists()
 
+        """Toda la programacion para que los enemigos te miren y te disparen, esta hecho gracias a la bibliteca math para aprovechar los angulos"""
         for enemy1 in self.enemy_list:
             start_x = enemy1.center_x
             start_y = enemy1.center_y
@@ -199,7 +219,9 @@ class MyGame(arcade.Window):
             y_diff = dest_y - start_y
             angle = math.atan2(y_diff, x_diff)
             enemy1.angle = math.degrees(angle) - 90
-            if self.frame_count % 60 == 0:
+
+            """Los enemigos te apuntan y no disparan todos a la vez si no en una franja de tiempo"""
+            if random.randrange(200) == 0:
                 enemy1bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
                 enemy1bullet.center_x = start_x
                 enemy1bullet.center_y = start_y
@@ -208,6 +230,19 @@ class MyGame(arcade.Window):
                 enemy1bullet.change_y = math.sin(angle) * BULLET_SPEED
                 self.enemybullet_list.append(enemy1bullet)
 
+        """Que los enemigos puedan golpearte y te quiten vidas"""
+        for enemy1bullet in self.enemybullet_list:
+            hit_list2 = arcade.check_for_collision_with_list(enemy1bullet, self.nave_list)
+            for self.nave_sprite in hit_list2:
+                self.Vidas -= 1
+                arcade.play_sound(self.hit_sound)
+                enemy1bullet.remove_from_sprite_lists()
+                if self.Vidas <= 0:
+                    self.game_state = GAME_OVER
+                    self.nave_sprite.remove_from_sprite_lists()
+                    self.enemybullet_list.append(enemy1bullet)
+
+        """Si tienes 0 vidas mueres"""
         for enemy1bullet in self.enemybullet_list:
             if enemy1bullet.top < 0:
                 enemy1bullet.remove_from_sprite_lists()
