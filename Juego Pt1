@@ -163,9 +163,6 @@ class MyGame(arcade.Window):
             self.set_fullscreen(not self.fullscreen)
             self.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
 
-        if self.game_state == GAME_OVER:
-            return
-        self.nave_sprite.center_x = 600
 
     def on_key_release(self, key, modifiers):
         if key == arcade.key.W or key == arcade.key.S:
