@@ -173,7 +173,6 @@ class MyGame(arcade.Window):
 
         if key == arcade.key.SPACE:
             if len(self.bullet_list) < MAX_PLAYER_BULLETS:
-                while self.Vidas > 0:
                     arcade.play_sound(self.gun_sound)
                     bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
                     bullet.angle = 90
@@ -205,7 +204,6 @@ class MyGame(arcade.Window):
     def on_mouse_press(self, x, y, button, modifiers):
         """Sistema de disparo totalmente vertical que se ejecuta si pulsas el boton izq del raton"""
         if len(self.bullet_list) < MAX_PLAYER_BULLETS:
-            while self.Vidas > 0:
                 arcade.play_sound(self.gun_sound)
                 bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
                 bullet.angle = 90
