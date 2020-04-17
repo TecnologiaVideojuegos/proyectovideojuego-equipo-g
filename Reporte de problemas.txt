@@ -2,6 +2,4 @@ Cuando el PJ muere puede seguir disparando
 
 Los enemigos siguen disparando cuando el PJ ha muerto	
 
-El intervalo de disparos de los enemigos es muy irregular
-
 Cuando el jugador pulsa dos teclas de movimiento opuesto(derecha-izquierda) el Pj va hacia la segunda tecla pulsada, pero al soltar el usuario cualquiera de las dos teclas el PJ se para
