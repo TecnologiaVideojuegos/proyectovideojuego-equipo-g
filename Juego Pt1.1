@@ -14,7 +14,9 @@ SCREEN_HEIGHT = 800
 SCREEN_TITLE = "HOLLOW RIDERS"
 """Para que no se sobrecargue todo de balas he puesto que haya un limite de balas en pantalla"""
 MAX_PLAYER_BULLETS = 10
+MAX_ENEMY1_BULLETS = 1
 BULLET_SPEED = 6
+MUSIC_VOLUME = 1
 
 """Estado del juego"""
 GAME_OVER = 1
@@ -109,6 +111,11 @@ class MyGame(arcade.Window):
         self.nave_sprite.center_y = 75
         self.nave_list.append(self.nave_sprite)
 
+        self.left_pressed = False
+        self.right_pressed = False
+        self.up_pressed = False
+        self.down_pressed = False
+
         for i in range(ENEMY_COUNT):
             """Aparicion de enemigos en posiciones randomizadas dentro de unas cordenadas"""
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
@@ -138,22 +145,22 @@ class MyGame(arcade.Window):
     def on_key_press(self, key, modifiers):
         """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
         if key == arcade.key.W:
-            self.nave_sprite.change_y = MOVEMENT_SPEED
+            self.up_pressed = True
         elif key == arcade.key.S:
-            self.nave_sprite.change_y = -MOVEMENT_SPEED
+            self.down_pressed = True
         elif key == arcade.key.A:
-            self.nave_sprite.change_x = -MOVEMENT_SPEED
+            self.left_pressed = True
         elif key == arcade.key.D:
-            self.nave_sprite.change_x = MOVEMENT_SPEED
+            self.right_pressed = True
 
         if key == arcade.key.UP:
-            self.nave_sprite.change_y = MOVEMENT_SPEED
+            self.up_pressed = True
         elif key == arcade.key.DOWN:
-            self.nave_sprite.change_y = -MOVEMENT_SPEED
+            self.down_pressed = True
         elif key == arcade.key.LEFT:
-            self.nave_sprite.change_x = -MOVEMENT_SPEED
+            self.left_pressed = True
         elif key == arcade.key.RIGHT:
-            self.nave_sprite.change_x = MOVEMENT_SPEED
+            self.right_pressed = True
         """Pantalla completa"""
         if key == arcade.key.V:
             self.set_fullscreen(not self.fullscreen)
@@ -164,38 +171,72 @@ class MyGame(arcade.Window):
             self.set_fullscreen(not self.fullscreen)
             self.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
 
+        if key == arcade.key.SPACE:
+            if len(self.bullet_list) < MAX_PLAYER_BULLETS:
+                while self.Vidas > 0:
+                    arcade.play_sound(self.gun_sound)
+                    bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
+                    bullet.angle = 90
+                    bullet.change_y = BULLET_SPEED
+                    bullet.center_x = self.nave_sprite.center_x
+                    bullet.bottom = self.nave_sprite.top
+                    self.bullet_list.append(bullet)
+
 
     def on_key_release(self, key, modifiers):
-        if key == arcade.key.W or key == arcade.key.S:
-            self.nave_sprite.change_y = 0
-        elif key == arcade.key.A or key == arcade.key.D:
-            self.nave_sprite.change_x = 0
+        if key == arcade.key.UP:
+            self.up_pressed = False
+        elif key == arcade.key.DOWN:
+            self.down_pressed = False
+        elif key == arcade.key.LEFT:
+            self.left_pressed = False
+        elif key == arcade.key.RIGHT:
+            self.right_pressed = False
 
-        if key == arcade.key.UP or key == arcade.key.DOWN:
-            self.nave_sprite.change_y = 0
-        elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
-            self.nave_sprite.change_x = 0
+        if key == arcade.key.W:
+            self.up_pressed = False
+        elif key == arcade.key.S:
+            self.down_pressed = False
+        elif key == arcade.key.A:
+            self.left_pressed = False
+        elif key == arcade.key.D:
+            self.right_pressed = False
 
     def on_mouse_press(self, x, y, button, modifiers):
         """Sistema de disparo totalmente vertical que se ejecuta si pulsas el boton izq del raton"""
         if len(self.bullet_list) < MAX_PLAYER_BULLETS:
-            arcade.play_sound(self.gun_sound)
-            bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
-            bullet.angle = 90
-            bullet.change_y = BULLET_SPEED
-            bullet.center_x = self.nave_sprite.center_x
-            bullet.bottom = self.nave_sprite.top
-            self.bullet_list.append(bullet)
+            while self.Vidas > 0:
+                arcade.play_sound(self.gun_sound)
+                bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
+                bullet.angle = 90
+                bullet.change_y = BULLET_SPEED
+                bullet.center_x = self.nave_sprite.center_x
+                bullet.bottom = self.nave_sprite.top
+                self.bullet_list.append(bullet)
 
     def on_update(self, delta_time):
         self.frame_count += 1
         self.bullet_list.update()
         self.nave_list.update()
         self.explosions_list.update()
+        self.nave_sprite.change_x = 0
+        self.nave_sprite.change_y = 0
+
+        """Para calculaar la velocidad segun las teclas que pulses"""
+        if self.up_pressed and not self.down_pressed:
+            self.nave_sprite.change_y = MOVEMENT_SPEED
+        elif self.down_pressed and not self.up_pressed:
+            self.nave_sprite.change_y = -MOVEMENT_SPEED
+        if self.left_pressed and not self.right_pressed:
+            self.nave_sprite.change_x = -MOVEMENT_SPEED
+        elif self.right_pressed and not self.left_pressed:
+            self.nave_sprite.change_x = MOVEMENT_SPEED
+        self.nave_list.update()
+
         """Para que la bala no atraviese objetivos y si das a un objetivo que te sume un punto"""
         for bullet in self.bullet_list:
             hit_list = arcade.check_for_collision_with_list(bullet, self.enemy_list)
-            if len(hit_list) > 0:
+            if len(hit_list) > MAX_ENEMY1_BULLETS:
                 explosion = Explosion(self.explosion_texture_list)
                 explosion.center_x = hit_list[0].center_x
                 explosion.center_y = hit_list[0].center_y
@@ -209,6 +250,10 @@ class MyGame(arcade.Window):
                 arcade.play_sound(self.hit_sound)
             if bullet.bottom > SCREEN_HEIGHT:
                 bullet.remove_from_sprite_lists()
+            """Cuando estas a cero vidas no puedes disparar"""
+            if self.Vidas <= 0:
+                bullet.remove_from_sprite_lists()
+        self.bullet_list.update()
 
         """Toda la programacion para que los enemigos te miren y te disparen, esta hecho gracias a la bibliteca math para aprovechar los angulos"""
         for enemy1 in self.enemy_list:
@@ -247,10 +292,17 @@ class MyGame(arcade.Window):
                     self.explosions_list.append(explosionnave)
                     enemy1bullet.remove_from_sprite_lists()
                     self.nave_sprite.remove_from_sprite_lists()
+                    self.enemybullet_list.append(enemy1bullet)
 
         """Si tienes 0 vidas mueres"""
         for enemy1bullet in self.enemybullet_list:
             if enemy1bullet.top < 0:
+                enemy1bullet.remove_from_sprite_lists()
+            elif enemy1bullet.center_x < 201:
+                enemy1bullet.remove_from_sprite_lists()
+            elif enemy1bullet.top > 1001:
+                enemy1bullet.remove_from_sprite_lists()
+            elif self.Vidas <= 0:
                 enemy1bullet.remove_from_sprite_lists()
         self.enemybullet_list.update()
 
