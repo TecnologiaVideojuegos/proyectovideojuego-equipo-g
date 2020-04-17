@@ -1,5 +1,3 @@
 Cuando el PJ muere puede seguir disparando
 
-Los enemigos siguen disparando cuando el PJ ha muerto	
-
-¡El juego crashea al hacer click con el boton izquierdo del raton!
+Cuando el PJ muere y dispara se ve momentaneamente el disparo antes de desaparecer 
