@@ -1,0 +1,3 @@
+Cuando el PJ muere puede seguir disparando
+
+Cuando el PJ muere y dispara se ve momentaneamente el disparo antes de desaparecer 
