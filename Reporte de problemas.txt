@@ -1,3 +1,7 @@
 Cuando el PJ muere puede seguir disparando
 
 Cuando el PJ muere y dispara se ve momentaneamente el disparo antes de desaparecer 
+
+Todos los enemigos se lanzan a por el PJ
+
+Bajadas de FPS al producirse una gran cantidad de disparos por parte del PJ y de los enemigos
