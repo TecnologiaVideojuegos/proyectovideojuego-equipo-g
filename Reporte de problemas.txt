@@ -1,6 +1,5 @@
-Bajadas de FPS al producirse una gran cantidad de disparos por parte del PJ y de los enemigos (ocurre muy pocas veces)
+Bajadas de FPS al producirse una explosion al matar un enemigo (la explosion es la que tenia la nave)
 
 El texto de controles se sale fuera de la ventana del juego
 
 Velocidad de la nave demasiado rapida
-
