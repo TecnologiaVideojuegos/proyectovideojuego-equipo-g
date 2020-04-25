@@ -102,10 +102,14 @@ class ControlesView(arcade.View):
         arcade.set_background_color(arcade.color.BLACK)
     def on_draw(self):
         arcade.start_render()
-        arcade.draw_text("CONTROLES", SCREEN_WIDTH/2, 700, arcade.color.WHITE, font_size=75, anchor_x="center")
+        arcade.draw_text("CONTROLES:", SCREEN_WIDTH/2, 700, arcade.color.WHITE, font_size=75, anchor_x="center")
         arcade.draw_text("MOVIMIENTO:", 80, 600, arcade.color.WHITE, font_size=20,anchor_x="center")
-        arcade.draw_text("El sistema de movimiento de este videojuego se basa en un movimiento \ncon una perspectiva isométrica. El movimiento de la nave es muy comodo ya que puedes moverla con las letras W, A, S y D, tanto con las flechas del teclado asi que puedes jugar como mas comodo te halles.",
-                         650, 550, arcade.color.WHITE, font_size=20, anchor_x="center")
+        arcade.draw_text("El sistema de movimiento de este videojuego se basa en un movimiento con una perspectiva isométrica.\nEl movimiento de la nave es muy comodo ya que puedes moverla con las letras W, A, S y D, tanto con las flechas del teclado.\nAsi que puedes jugar como mas comodo te halles.",
+                         625, 525, arcade.color.WHITE, font_size=20, anchor_x="center")
+        arcade.draw_text("DISPAROS:", 60, 475, arcade.color.WHITE, font_size=20, anchor_x="center")
+        arcade.draw_text("El sistema de disparo se basa en un disparo recto de 90º que se activa con la barra espaciadora o el click izquierdo, \n solo puede haber 3 balas a la vez en pantalla",
+                         585, 425, arcade.color.WHITE, font_size=20, anchor_x="center")
+        arcade.draw_text("<Pulsa Click para volver al menu>", SCREEN_WIDTH/2, 300, arcade.color.WHITE, font_size=20, anchor_x="center")
     def on_mouse_press(self, _x, _y, _buttom, _modifiers):
         menu_view = MenuView()
         self.window.show_view(menu_view)
@@ -156,86 +160,86 @@ class MyGame(arcade.View):
 
     """Bases del sistema de niveles"""
     def nivel_1(self):
-        for i in range(ENEMY_COUNT):
+        for i in range(3):
                 """Aparicion de enemigos en posiciones randomizadas dentro de unas cordenadas"""
                 enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
                 enemy1.center_x = random.randrange(340, 1140)
                 enemy1.center_y = random.randrange(400, 790)
                 self.enemy_list.append(enemy1)
     def nivel_2(self):
-        for i in range(ENEMY_COUNT + 5):
+        for i in range(7):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_3(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(12):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_4(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(17):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_5(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(1):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_6(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(20):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_7(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(23):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_8(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(25):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_9(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(27):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_10(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(1):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_11(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(30):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_12(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(33):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_13(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(35):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_14(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(37):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
@@ -247,31 +251,31 @@ class MyGame(arcade.View):
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_16(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(35):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_17(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(37):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_18(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(37):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_19(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(40):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
     def nivel_20(self):
-        for i in range(ENEMY_COUNT + 10):
+        for i in range(1):
             enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
@@ -383,12 +387,7 @@ class MyGame(arcade.View):
         """Para que la bala no atraviese objetivos y si das a un objetivo que te sume un punto"""
         for bullet in self.bullet_list:
             hit_list = arcade.check_for_collision_with_list(bullet, self.enemy_list)
-            if len(hit_list) > MAX_ENEMY1_BULLETS:
-                explosion = Explosion(self.explosion_texture_list)
-                explosion.center_x = hit_list[0].center_x
-                explosion.center_y = hit_list[0].center_y
-                explosion.update()
-                self.explosions_list.append(explosion)
+            if len(hit_list) < MAX_ENEMY1_BULLETS:
                 bullet.remove_from_sprite_lists()
             """Para que cuando mates a un enemigo desaparezca la bala y no siga"""
             for enemy1 in hit_list:
@@ -549,14 +548,24 @@ class GameOverView(arcade.View):
     def on_draw(self):
         arcade.start_render()
         arcade.draw_text("GAME OVER", 400, 600, arcade.color.WHITE, 100)
-        arcade.draw_text("Click to restart", 590, 450, arcade.color.WHITE, 25)
         time_taken_formatted = f"{round(self.time_taken,2)} segundos"
-        arcade.draw_text(f"Tiempo: {time_taken_formatted}", 675, 350, arcade.color.WHITE, font_size = 15, anchor_x = "center")
+        arcade.draw_text(f"Tiempo: {time_taken_formatted}", 675, 500, arcade.color.WHITE, font_size = 15, anchor_x = "center")
         output_total = f"Puntuacion Total: {self.window.total_score} puntos"
-        arcade.draw_text(output_total, 580, 300, arcade.color.WHITE, 14)
-    def on_mouse_press(self, _x, _y, _button, _modifers):
-        game_view = MyGame()
-        self.window.show_view(game_view)
+        arcade.draw_text(output_total, 580, 450, arcade.color.WHITE, 14)
+        arcade.draw_text("Para volver a jugar pulsa: R", 690, 400, arcade.color.WHITE, font_size= 15, anchor_x="center")
+        arcade.draw_text("Para volver al menu: M", 690, 350, arcade.color.WHITE, font_size=15, anchor_x="center")
+        arcade.draw_text("Para salir del juego: ESC", 690, 300, arcade.color.WHITE, font_size=15, anchor_x="center")
+
+    def on_key_press(self, key, modifiers):
+        if key == arcade.key.R:
+            game_view = MyGame()
+            self.window.show_view(game_view)
+        if key == arcade.key.M:
+            menu_view = MenuView()
+            self.window.show_view(menu_view)
+        if key == arcade.key.ESCAPE:
+            exit()
+
 
 def main():
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
