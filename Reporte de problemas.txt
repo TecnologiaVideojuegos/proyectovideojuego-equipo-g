@@ -1,3 +1,5 @@
-Cuando el PJ muere puede seguir disparando
+Bajadas de FPS al producirse una explosion al matar un enemigo (la explosion es la que tenia la nave)
 
-Cuando el PJ muere y dispara se ve momentaneamente el disparo antes de desaparecer 
+El texto de controles se sale fuera de la ventana del juego
+
+Velocidad de la nave demasiado rapida
