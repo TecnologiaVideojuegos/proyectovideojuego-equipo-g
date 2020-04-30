@@ -160,6 +160,7 @@ class MyGame(arcade.View):
 
     """Bases del sistema de niveles"""
     def nivel_1(self):
+        arcade.draw_text("Nivel: 1", 100, 600, arcade.color.WHITE, font_size=15, anchor_x="center")
         for i in range(3):
                 """Aparicion de enemigos en posiciones randomizadas dentro de unas cordenadas"""
                 enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
@@ -294,10 +295,50 @@ class MyGame(arcade.View):
         self.enemybullet_list.draw()
         self.explosions_list.draw()
         """El sistema de puntuaciones y de vida"""
-        arcade.draw_text(f"Score: {self.window.total_score}" , 10, 725, arcade.color.WHITE, 14)
+        arcade.draw_text(f"Score: {self.score}" , 10, 725, arcade.color.WHITE, 14)
         arcade.draw_text(f"Vidas: {self.Vidas}" , 10, 750, arcade.color.WHITE, 14)
         time_taken_formatted = f"{round(self.time_taken, 2)} segundos"
         arcade.draw_text(f"Tiempo: {time_taken_formatted}", 95, 700, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 1:
+            arcade.draw_text("Nivel: 1", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 2:
+            arcade.draw_text("Nivel: 2", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 3:
+            arcade.draw_text("Nivel: 3", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 4:
+            arcade.draw_text("Nivel: 4", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 5:
+            arcade.draw_text("PRIMER JEFE", 50, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 6:
+            arcade.draw_text("Nivel: 6", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 7:
+            arcade.draw_text("Nivel: 7", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 8:
+            arcade.draw_text("Nivel: 8", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 9:
+            arcade.draw_text("Nivel: 9", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 10:
+            arcade.draw_text("SEGUNDO JEFE", 60, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 11:
+            arcade.draw_text("Nivel: 11", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 12:
+            arcade.draw_text("Nivel: 12", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 13:
+            arcade.draw_text("Nivel: 13", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 14:
+            arcade.draw_text("Nivel: 14", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 15:
+            arcade.draw_text("TERCER JEFE", 50, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 16:
+            arcade.draw_text("Nivel: 16", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 17:
+            arcade.draw_text("Nivel: 17", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 18:
+            arcade.draw_text("Nivel: 18", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 19:
+            arcade.draw_text("Nivel: 19", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+        if self.nivel == 20:
+            arcade.draw_text("JEFE FINAL", 50, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
 
     def on_key_press(self, key, modifiers):
         """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
@@ -387,7 +428,7 @@ class MyGame(arcade.View):
         """Para que la bala no atraviese objetivos y si das a un objetivo que te sume un punto"""
         for bullet in self.bullet_list:
             hit_list = arcade.check_for_collision_with_list(bullet, self.enemy_list)
-            if len(hit_list) < MAX_ENEMY1_BULLETS:
+            if len(hit_list) > MAX_ENEMY1_BULLETS:
                 bullet.remove_from_sprite_lists()
             """Para que cuando mates a un enemigo desaparezca la bala y no siga"""
             for enemy1 in hit_list:
@@ -415,7 +456,7 @@ class MyGame(arcade.View):
             enemy1.angle = math.degrees(angle) - 90
 
             """Los enemigos te apuntan y no disparan todos a la vez si no en una franja de tiempo"""
-            if random.randrange(200) == 0:
+            if random.randrange(150) == 0:
                 enemy1bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
                 enemy1bullet.center_x = start_x
                 enemy1bullet.center_y = start_y
@@ -558,14 +599,13 @@ class GameOverView(arcade.View):
 
     def on_key_press(self, key, modifiers):
         if key == arcade.key.R:
-            game_view = MyGame()
-            self.window.show_view(game_view)
+            game = MyGame()
+            self.window.show_view(game)
         if key == arcade.key.M:
             menu_view = MenuView()
             self.window.show_view(menu_view)
         if key == arcade.key.ESCAPE:
             exit()
-
 
 def main():
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
