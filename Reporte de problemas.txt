@@ -1,11 +1,3 @@
-Bajadas de FPS al producirse una explosion al matar un enemigo (la explosion es la que tenia la nave)
-
 El texto de movimientos dentro de controles no tiene ningun margen
 
-Velocidad de la nave demasiado rapida
-
 Las estadisticas en la pantalla de Game over no estan alineadas
-
-¡Cuando se pulsa el boton de disparo solo se escucha el sonido, no sale ningun disparo!
-
-Cuando se pausa el juego se puede seguir viendo la nave
