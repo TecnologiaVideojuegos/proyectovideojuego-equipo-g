@@ -2,7 +2,7 @@ import arcade
 import random
 import os
 import math
-
+import Enemigos
 SPRITE_SCALING_NAVE = 0.2
 SPRITE_SCALING_ENEMY = 0.1
 SPRITE_SCALING_BULLET = 0.5
@@ -132,16 +132,16 @@ class MyGame(arcade.View):
         self.nave_sprite = arcade.SpriteList()
         self.explosions_list = arcade.SpriteList()
         self.enemybullet_list = arcade.SpriteList()
-        self.background1 = arcade.load_texture(":resources:images/practicas/FondoMarino.jpg")
-        self.background2 = arcade.load_texture(":resources:images/practicas/FondoMarino2.jpg")
-        self.background3 = arcade.load_texture(":resources:images/practicas/FondoMarino3.jpg")
-        self.background4 = arcade.load_texture(":resources:images/practicas/FondoEstelar.jpg")
+        self.background1 = arcade.load_texture("C:/Users/Revij/PycharmProjects/Ejemplo/Fondos/FondoMarino.jpg")
+        self.background2 = arcade.load_texture("C:/Users/Revij/PycharmProjects/Ejemplo/Fondos/FondoEstelar.jpg")
         self.score = 0
         self.Vidas = 3
         self.nivel = 1
         self.time_taken = 0
+        self.liston=[]
+        self.listado=[]
         self.nivel_1()
-        self.nave_sprite = nave(":resources:images/practicas/nave.png", SPRITE_SCALING_NAVE)
+        self.nave_sprite = nave("Sprites/nave.png", SPRITE_SCALING_NAVE)
         self.nave_sprite.center_x = 600
         self.nave_sprite.center_y = 75
         self.nave_list.append(self.nave_sprite)
@@ -167,125 +167,61 @@ class MyGame(arcade.View):
     """Bases del sistema de niveles"""
     def nivel_1(self):
         for i in range(3):
-                """Aparicion de enemigos en posiciones randomizadas dentro de unas cordenadas"""
-                enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-                enemy1.center_x = random.randrange(340, 1200)
-                enemy1.center_y = random.randrange(400, 790)
-                self.enemy_list.append(enemy1)
+            """Aparicion de enemigos en posiciones randomizadas dentro de unas cordenadas"""
+            enemy1 = arcade.Sprite("sprites/bichoFinal.png", SPRITE_SCALING_ENEMY)
+            enemy1.center_x = random.randrange(340, 1200)
+            enemy1.center_y = random.randrange(400, 790)
+            self.enemy_list.append(enemy1)
+
     def nivel_2(self):
         for i in range(7):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("sprites/bichoFinal.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
+
     def nivel_3(self):
         for i in range(12):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("sprites/bichoFinal.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
+
+        for si in range(1):
+            enemy2 = Enemigos.Mosquito()
+            self.liston.append(enemy2)
+
     def nivel_4(self):
         for i in range(17):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("sprites/bichoFinal.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
+
+        for si in range(4):
+            enemy2 = Enemigos.Mosquito()
+            self.liston.append(enemy2)
+
     def nivel_5(self):
-        for i in range(1):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
+        for i in range(10):
+            enemy1 = arcade.Sprite("sprites/bichoFinal.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
+        for si in range(4):
+            enemy2 = Enemigos.Mosquito()
+            self.liston.append(enemy2)
+        for pipo in range(5):
+            enemy3 = Enemigos.Bala_Rebot()
+            self.listado.append(enemy3)
+
     def nivel_6(self):
         for i in range(20):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("sprites/bichoFinal.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
-    def nivel_7(self):
-        for i in range(23):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_8(self):
-        for i in range(25):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_9(self):
-        for i in range(27):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1140)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_10(self):
-        for i in range(1):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_11(self):
-        for i in range(30):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_12(self):
-        for i in range(33):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_13(self):
-        for i in range(35):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_14(self):
-        for i in range(37):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_15(self):
-        for i in range(ENEMY_COUNT + 10):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_16(self):
-        for i in range(35):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_17(self):
-        for i in range(37):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_18(self):
-        for i in range(37):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_19(self):
-        for i in range(40):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-    def nivel_20(self):
-        for i in range(1):
-            enemy1 = arcade.Sprite(":resources:images/practicas/BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
+
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
         self.window.set_mouse_visible(False)
@@ -307,54 +243,27 @@ class MyGame(arcade.View):
             arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background1)
         if self.nivel == 3:
             arcade.draw_text("Nivel: 3", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background2)
+            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background1)
         if self.nivel == 4:
             arcade.draw_text("Nivel: 4", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background2)
+            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background1)
         if self.nivel == 5:
             arcade.draw_text("PRIMER JEFE", 50, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background3)
+            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background1)
         if self.nivel == 6:
             arcade.draw_text("Nivel: 6", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background4)
-        if self.nivel == 7:
-            arcade.draw_text("Nivel: 7", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background4)
-        if self.nivel == 8:
-            arcade.draw_text("Nivel: 8", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background4)
-        if self.nivel == 9:
-            arcade.draw_text("Nivel: 9", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background4)
-        if self.nivel == 10:
-            arcade.draw_text("SEGUNDO JEFE", 60, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background4)
-        if self.nivel == 11:
-            arcade.draw_text("Nivel: 11", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-        if self.nivel == 12:
-            arcade.draw_text("Nivel: 12", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-        if self.nivel == 13:
-            arcade.draw_text("Nivel: 13", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-        if self.nivel == 14:
-            arcade.draw_text("Nivel: 14", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-        if self.nivel == 15:
-            arcade.draw_text("TERCER JEFE", 50, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-        if self.nivel == 16:
-            arcade.draw_text("Nivel: 16", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-        if self.nivel == 17:
-            arcade.draw_text("Nivel: 17", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-        if self.nivel == 18:
-            arcade.draw_text("Nivel: 18", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-        if self.nivel == 19:
-            arcade.draw_text("Nivel: 19", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-        if self.nivel == 20:
-            arcade.draw_text("JEFE FINAL", 50, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
+            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background2)
 
         self.enemy_list.draw()
         self.bullet_list.draw()
         self.nave_list.draw()
         self.enemybullet_list.draw()
         self.explosions_list.draw()
+        for k in self.liston:   #For para dibujar los mosquitos dentro del liston
+            k.sprite.draw()
+            k.bala.draw()
+        for su in self.listado:   #for para dibujar las balas que rebotan
+            su.sprite.draw()
 
     def on_key_press(self, key, modifiers):
         """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
@@ -379,8 +288,8 @@ class MyGame(arcade.View):
         if key == arcade.key.SPACE:
             if len(self.bullet_list) < MAX_PLAYER_BULLETS:
                 arcade.play_sound(self.gun_sound)
-                bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
-                bullet.angle = 90
+                bullet = arcade.Sprite("sprites/RedBullet.png", SPRITE_SCALING_BULLET)
+                bullet.angle = 0
                 bullet.change_y = BULLET_SPEED
                 bullet.center_x = self.nave_sprite.center_x
                 bullet.bottom = self.nave_sprite.top
@@ -414,8 +323,8 @@ class MyGame(arcade.View):
         """Sistema de disparo totalmente vertical que se ejecuta si pulsas el boton izq del raton"""
         if len(self.bullet_list) < MAX_PLAYER_BULLETS:
             arcade.play_sound(self.gun_sound)
-            bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
-            bullet.angle = 90
+            bullet = arcade.Sprite("sprites/RedBullet.png", SPRITE_SCALING_BULLET)
+            bullet.angle = 0
             bullet.change_y = BULLET_SPEED
             bullet.center_x = self.nave_sprite.center_x
             bullet.bottom = self.nave_sprite.top
@@ -429,6 +338,11 @@ class MyGame(arcade.View):
         self.explosions_list.update()
         self.nave_sprite.change_x = 0
         self.nave_sprite.change_y = 0
+        for l in self.listado:
+            l.movimiento()
+        for k in self.liston:
+            k.movimiento()
+            k.bala.update()
 
         """Para calculaar la velocidad segun las teclas que pulses"""
         if self.up_pressed and not self.down_pressed:
@@ -473,7 +387,7 @@ class MyGame(arcade.View):
 
             """Los enemigos te apuntan y no disparan todos a la vez si no en una franja de tiempo"""
             if random.randrange(150) == 0:
-                enemy1bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
+                enemy1bullet = arcade.Sprite("sprites/RedBullet.png", SPRITE_SCALING_BULLET)
                 enemy1bullet.center_x = start_x
                 enemy1bullet.center_y = start_y
                 enemy1bullet.angle = math.degrees(angle)
@@ -506,6 +420,43 @@ class MyGame(arcade.View):
                 enemy1bullet.remove_from_sprite_lists()
         self.enemybullet_list.update()
 
+        for rueda in self.listado:    #Para chequear las colisiones entre las balas que rebotan y la nace
+            if arcade.check_for_collision(self.nave_sprite, rueda.sprite):
+                self.Vidas -= 1
+                self.listado.remove(rueda)
+                if self.Vidas <= 0:
+                    game_over_view = GameOverView()
+                    game_over_view.time_taken = self.time_taken
+                    self.window.set_mouse_visible(True)
+                    self.window.show_view(game_over_view)
+
+        for venga in self.listado:    #Para chequear las colisiones entre las balas que de los mosquitos y la nave
+            for bala in self.bullet_list:
+                if arcade.check_for_collision(venga.sprite, bala):
+                    self.bullet_list.remove(bala)
+                    venga.vidas -= 1
+                    if venga.vidas == 0:
+                        self.listado.remove(venga)
+
+        for venga in self.liston:    #Revisa colisiones entre las balas del jugador y las balas que rebot
+            for bala in self.bullet_list:
+                if arcade.check_for_collision(venga.sprite, bala):
+                    self.bullet_list.remove(bala)
+                    venga.vidas -= 1
+                    if venga.vidas == 0:
+                        self.liston.remove(venga)
+
+        for s in self.liston:    #Revisa colisiones entre las balas del jugador y los mosquitos
+            colision = arcade.check_for_collision_with_list(s.bala, self.nave_list)
+            for self.nave_sprite in colision:
+                s.lista_balas.remove(s.lista_balas[0])
+                self.Vidas -= 1
+                if self.Vidas <= 0:
+                    game_over_view = GameOverView()
+                    game_over_view.time_taken = self.time_taken
+                    self.window.set_mouse_visible(True)
+                    self.window.show_view(game_over_view)
+
         """Sistema de cambio de niveles"""
         if len(self.enemy_list) == 0 and self.nivel == 1:
             self.nivel += 1
@@ -520,110 +471,15 @@ class MyGame(arcade.View):
             self.nivel += 1
             self.nivel_5()
         elif len(self.enemy_list) == 0 and self.nivel == 5:
-            intermedio1_view = Intermedio1View(self)
-            self.window.show_view(intermedio1_view)
             self.nivel += 1
+            self.Vidas += 1
             self.nivel_6()
-            self.Vidas += 1
+
         elif len(self.enemy_list) == 0 and self.nivel == 6:
-            self.nivel += 1
-            self.nivel_7()
-        elif len(self.enemy_list) == 0 and self.nivel == 7:
-            self.nivel += 1
-            self.nivel_8()
-        elif len(self.enemy_list) == 0 and self.nivel == 8:
-            self.nivel += 1
-            self.nivel_9()
-        elif len(self.enemy_list) == 0 and self.nivel == 9:
-            self.nivel += 1
-            self.nivel_10()
-        elif len(self.enemy_list) == 0 and self.nivel == 10:
-            intermedio2_view = Intermedio2View(self)
-            self.window.show_view(intermedio2_view)
-            self.nivel += 1
-            self.Vidas += 1
-            self.nivel_11()
-        elif len(self.enemy_list) == 0 and self.nivel == 11:
-            self.nivel += 1
-            self.nivel_12()
-        elif len(self.enemy_list) == 0 and self.nivel == 12:
-            self.nivel += 1
-            self.nivel_13()
-        elif len(self.enemy_list) == 0 and self.nivel == 13:
-            self.nivel += 1
-            self.nivel_14()
-        elif len(self.enemy_list) == 0 and self.nivel == 14:
-            self.nivel += 1
-            self.nivel_15()
-        elif len(self.enemy_list) == 0 and self.nivel == 15:
-            intermedio3_view = Intermedio3View(self)
-            self.window.show_view(intermedio3_view)
-            self.nivel += 1
-            self.Vidas += 1
-            self.nivel_16()
-        elif len(self.enemy_list) == 0 and self.nivel == 16:
-            self.nivel += 1
-            self.nivel_17()
-        elif len(self.enemy_list) == 0 and self.nivel == 17:
-            self.nivel += 1
-            self.nivel_18()
-        elif len(self.enemy_list) == 0 and self.nivel == 18:
-            self.nivel += 1
-            self.nivel_19()
-        elif len(self.enemy_list) == 0 and self.nivel == 19:
-            self.nivel += 1
-            self.nivel_20()
-        elif len(self.enemy_list) == 0 and self.nivel ==20:
             victoria_view = VictoriaView()
             victoria_view.time_taken = self.time_taken
             self.window.set_mouse_visible(True)
             self.window.show_view(victoria_view)
-
-class Intermedio1View(arcade.View):
-    def __init__(self, game_view):
-        super().__init__()
-        self.game_view = game_view
-    def on_show(self):
-        arcade.set_background_color(arcade.color.BLACK)
-    def on_draw(self):
-        arcade.start_render()
-        arcade.draw_text("HOLLOW RIDERS", 750, 700, arcade.color.WHITE, font_size=70, anchor_x="center")
-        arcade.draw_text("Tras derrotar la primera oleada de enemigos que atacaba el nucleo de la ciudad, el ejercito caladino se dirije hacia la naves de asalto\nde los Isithsaba que estaban preparando una segunda oleada, el contraataque impedira a los Isithsaba seguir detruyendo la ciudad y\nllevara el combate a su terreno, si el contraataque falla podria ser el fin de los caladinos.", 750, 550, arcade.color.WHITE, font_size=20, anchor_x="center")
-        arcade.draw_text("Click para continuar", SCREEN_WIDTH/2, 300, arcade.color.WHITE, font_size=20,anchor_x="center")
-    def on_mouse_press(self, _x, _y, _buttom, _modifiers):
-        self.window.show_view(self.game_view)
-
-class Intermedio2View(arcade.View):
-    def __init__(self, game_view):
-        super().__init__()
-        self.game_view = game_view
-    def on_show(self):
-        arcade.set_background_color(arcade.color.BLACK)
-    def on_draw(self):
-        arcade.start_render()
-        arcade.draw_text("HOLLOW RIDERS", 750, 700, arcade.color.WHITE, font_size=70, anchor_x="center")
-        arcade.draw_text("En el año 1357 la colonia del imperio Caladino, Spe, está siendo invadida por la especie de los Isithsaba, una raza invasora, que sobrevive\ninvadiendo mundos y extrayendo todo sus recursos hasta destruir el planeta, el pueblo caladino no puede permitirse perder su colonia, tras haber\nabusado en exceso de su planeta están llevando a cabo una migración a Spe un planeta lleno de vida sin ninguna especie que halla desarrollado\nningún tipo de civilización, pero con la llegada de los Isithsaba los caladinos estan viendo la posible extinción de su especie y eso no es algo que\npiensan permitir, como pueblo guerrero que son lucharan hasta el final por su planeta."
-        , 750, 550, arcade.color.WHITE, font_size=20, anchor_x="center")
-        arcade.draw_text("Click para continuar", SCREEN_WIDTH/2, 300, arcade.color.WHITE, font_size=20,anchor_x="center")
-    def on_mouse_press(self, _x, _y, _buttom, _modifiers):
-        self.window.show_view(self.game_view)
-
-class Intermedio3View(arcade.View):
-    def __init__(self, game_view):
-        super().__init__()
-        self.game_view = game_view
-    def on_show(self):
-        arcade.set_background_color(arcade.color.BLACK)
-    def on_draw(self):
-        arcade.start_render()
-        arcade.draw_text("HOLLOW RIDERS", 750, 700, arcade.color.WHITE, font_size=70, anchor_x="center")
-        arcade.draw_text("En el año 1357 la colonia del imperio Caladino, Spe, está siendo invadida por la especie de los Isithsaba, una raza invasora, que sobrevive\ninvadiendo mundos y extrayendo todo sus recursos hasta destruir el planeta, el pueblo caladino no puede permitirse perder su colonia, tras haber\nabusado en exceso de su planeta están llevando a cabo una migración a Spe un planeta lleno de vida sin ninguna especie que halla desarrollado\nningún tipo de civilización, pero con la llegada de los Isithsaba los caladinos estan viendo la posible extinción de su especie y eso no es algo que\npiensan permitir, como pueblo guerrero que son lucharan hasta el final por su planeta."
-        , 750, 550, arcade.color.WHITE, font_size=20, anchor_x="center")
-        arcade.draw_text("Click para continuar", SCREEN_WIDTH/2, 300, arcade.color.WHITE, font_size=20,anchor_x="center")
-    def on_mouse_press(self, _x, _y, _buttom, _modifiers):
-        self.window.show_view(self.game_view)
-
-
 
 class PauseView(arcade.View):
     def __init__(self, game_view):
@@ -631,6 +487,7 @@ class PauseView(arcade.View):
         self.game_view = game_view
     def on_show(self):
         arcade.set_background_color(arcade.color.ORANGE)
+
     def on_draw(self):
         arcade.start_render()
         nave_sprite = self.game_view.nave_sprite
@@ -639,22 +496,19 @@ class PauseView(arcade.View):
         arcade.draw_text("PAUSED", SCREEN_WIDTH/2, SCREEN_HEIGHT/2+50, arcade.color.BLACK, font_size=50, anchor_x="center")
         arcade.draw_text("Pulsa ENTER para volver al juego", SCREEN_WIDTH/2, SCREEN_HEIGHT/2, arcade.color.BLACK, font_size=20, anchor_x="center")
         arcade.draw_text("Pulsa R para resetar", SCREEN_WIDTH/2, SCREEN_HEIGHT/2-30, arcade.color.BLACK, font_size= 20, anchor_x="center")
-        arcade.draw_text("Pulsa M para volver al menu", SCREEN_WIDTH/2, SCREEN_HEIGHT/2-60, arcade.color.BLACK, font_size= 20, anchor_x="center")
+
     def on_key_press(self, key, _modifiers):
         if key == arcade.key.ENTER:
             self.window.show_view(self.game_view)
         elif key == arcade.key.R:
             game = MyGame()
             self.window.show_view(game)
-        elif key == arcade.key.M:
-            menu_view = MenuView()
-            self.window.show_view(menu_view)
 
 class GameOverView(arcade.View):
     def __init__(self):
         super().__init__()
         self.time_taken = 0
-        self.backgroundGameOver = arcade.load_texture(":resources:images/practicas/FondoGameOver.jpg")
+        self.backgroundGameOver = arcade.load_texture("C:/Users/Revij/PycharmProjects/Ejemplo/Fondos/FondoGameOver.jpg")
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -685,7 +539,7 @@ class VictoriaView(arcade.View):
     def __init__(self):
         super().__init__()
         self.time_taken = 0
-        self.backgroundVictoria = arcade.load_texture(":resources:images/practicas/FondoVictoria.jpg")
+        self.backgroundVictoria = arcade.load_texture("C:/Users/Revij/PycharmProjects/Ejemplo/Fondos/FondoVictoria.jpg")
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
