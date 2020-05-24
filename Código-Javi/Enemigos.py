@@ -5,7 +5,7 @@ import random
 class Enemy():  # solo existe para ahorrar código
     def __init__(self):
         self.cor_x = random.randint(220, 1280)  # Las coordenadas iniciales de la mayoría de enemigos serán aleatorias
-        self.cor_y = random.randint(420, 780)
+        self.cor_y = 645
 
 
 class Mosquito(Enemy):  # Clase Mosquito
@@ -19,7 +19,10 @@ class Mosquito(Enemy):  # Clase Mosquito
         self.direc = random.randint(0, 1)  # Variable aleatoria que marcará el sentido inicial del enemigo al aparecer
         self.contador = 0  # Importante para la animación
         self.lista_balas = arcade.SpriteList()  # Lista que contendrá las balas
+        self.vidas = 4
+        self.bala = arcade.Sprite("sprites/RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
         self.sprite = self.sprite_animacion[0]
+
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
@@ -46,9 +49,45 @@ class Mosquito(Enemy):  # Clase Mosquito
 
         if len(self.lista_balas) < 1:  # si la lista está vacía crea una nueva bala
             self.bala = arcade.Sprite("sprites/RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+            self.bala.change_y = -9
             self.lista_balas.append(self.bala)
 
         for r in self.lista_balas:  # actualizamos posicion de la bala
-            r.center_y -= 5
             if r.center_y <= 0:
                 self.lista_balas.remove(r)  # si la bala se sale de la pantalla, se borra de la lista
+
+
+
+class Bala_Rebot():
+    def __init__(self):
+        self.cor_x = random.randint(300, 1000)
+        self.cor_Y = 700
+        self.direc = 0
+        self.sprite_animacion = [arcade.Sprite("sprites/BalaRebota.png", center_x=self.cor_x, center_y=self.cor_Y)
+            , arcade.Sprite("sprites/BalaRebotaCharged.png", center_x=self.cor_x, center_y=self.cor_Y)]
+        self.contador = 0
+        self.sprite = self.sprite_animacion[0]
+        self.vidas = 2
+
+    def movimiento(self):
+        if self.direc == 1:  # cambia las coordenadas del enemigo
+            self.cor_Y += 8
+
+        elif self.direc == 0:
+            self.cor_Y -= 8
+
+        if self.cor_Y < 120:  # cambia la dirección del enemigo al llegar a los bordes
+            self.direc = 1
+
+        elif self.cor_Y > 750:
+            self.direc = 0
+
+        self.contador += 1
+        if self.contador % 301 == 0:
+            self.sprite = self.sprite_animacion[1]
+
+        elif self.contador % 2000 == 0:
+            self.sprite = self.sprite_animacion[0]
+
+        self.sprite.center_x = self.cor_x
+        self.sprite.center_y = self.cor_Y
