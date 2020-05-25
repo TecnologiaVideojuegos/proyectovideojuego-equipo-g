@@ -11,18 +11,17 @@ class Enemy():  # solo existe para ahorrar código
 class Mosquito(Enemy):  # Clase Mosquito
     def __init__(self):
         super().__init__()
-        self.sprite_animacion = [arcade.Sprite("sprites/Fly.png", center_x=self.cor_x, center_y=self.cor_y),
+        self.sprite_animacion = [arcade.Sprite(":resources:images/practicas/Fly.png", center_x=self.cor_x, center_y=self.cor_y),
                                  # Lista que contiene los 3 sprites necesarios para la animación
-                                 arcade.Sprite("sprites/FlyBack.png", center_x=self.cor_x, center_y=self.cor_y),
-                                 arcade.Sprite("sprites/FlyBack.png", center_x=self.cor_x, center_y=self.cor_y)]
+                                 arcade.Sprite(":resources:images/practicas/FlyBack.png", center_x=self.cor_x, center_y=self.cor_y),
+                                 arcade.Sprite(":resources:images/practicas/FlyBack.png", center_x=self.cor_x, center_y=self.cor_y)]
 
         self.direc = random.randint(0, 1)  # Variable aleatoria que marcará el sentido inicial del enemigo al aparecer
         self.contador = 0  # Importante para la animación
         self.lista_balas = arcade.SpriteList()  # Lista que contendrá las balas
         self.vidas = 4
-        self.bala = arcade.Sprite("sprites/RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+        self.bala = arcade.Sprite(":resources:images/practicas/RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
         self.sprite = self.sprite_animacion[0]
-
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
@@ -48,23 +47,21 @@ class Mosquito(Enemy):  # Clase Mosquito
             self.contador = 0
 
         if len(self.lista_balas) < 1:  # si la lista está vacía crea una nueva bala
-            self.bala = arcade.Sprite("sprites/RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
-            self.bala.change_y = -9
+            self.bala = arcade.Sprite(":resources:images/practicas/RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
             self.lista_balas.append(self.bala)
 
         for r in self.lista_balas:  # actualizamos posicion de la bala
+            r.center_y -= 5
             if r.center_y <= 0:
                 self.lista_balas.remove(r)  # si la bala se sale de la pantalla, se borra de la lista
-
-
 
 class Bala_Rebot():
     def __init__(self):
         self.cor_x = random.randint(300, 1000)
         self.cor_Y = 700
         self.direc = 0
-        self.sprite_animacion = [arcade.Sprite("sprites/BalaRebota.png", center_x=self.cor_x, center_y=self.cor_Y)
-            , arcade.Sprite("sprites/BalaRebotaCharged.png", center_x=self.cor_x, center_y=self.cor_Y)]
+        self.sprite_animacion = [arcade.Sprite(":resources:images/practicas/BalaRebota.png", center_x=self.cor_x, center_y=self.cor_Y)
+            , arcade.Sprite(":resources:images/practicas/BalaRebotaCharged.png", center_x=self.cor_x, center_y=self.cor_Y)]
         self.contador = 0
         self.sprite = self.sprite_animacion[0]
         self.vidas = 2
@@ -89,5 +86,18 @@ class Bala_Rebot():
         elif self.contador % 2000 == 0:
             self.sprite = self.sprite_animacion[0]
 
+        self.sprite.center_x = self.cor_x
+        self.sprite.center_y = self.cor_Y
+
+class NaveSOS(Enemy):
+    def __init__(self):
+        super().__init__()
+        self.cor_x = random.randint(300, 1000)
+        self.cor_Y = 800
+        self.vidas = 1
+        self.sprite = arcade.Sprite(":resources:images/practicas/enemy.png", 0.1)
+
+    def movimiento(self):
+        self.cor_Y -= 3
         self.sprite.center_x = self.cor_x
         self.sprite.center_y = self.cor_Y
