@@ -4,7 +4,7 @@ import os
 import math
 import Enemigos
 
-SPRITE_SCALING_NAVE = 0.2
+SPRITE_SCALING_NAVE = 0.85
 SPRITE_SCALING_ENEMY = 0.1
 SPRITE_SCALING_BULLET = 0.5
 MOVEMENT_SPEED = 7
@@ -13,6 +13,7 @@ VIEWPORT_MARGIN = 40
 SCREEN_WIDTH = 1500
 SCREEN_HEIGHT = 800
 SCREEN_TITLE = "HOLLOW RIDERS"
+MUSIC_VOLUME = 0.5
 """Para que no se sobrecargue todo de balas he puesto que haya un limite de balas en pantalla"""
 MAX_PLAYER_BULLETS = 5
 MAX_ENEMY1_BULLETS = 1
@@ -21,7 +22,7 @@ BULLET_SPEED = 9
 def bordes():
     """" Los bordes para poner imagenes en ellos la puntuacion etc """
 
-    arcade.draw_lrwh_rectangle_textured(-20, 0, 200, 867, arcade.load_texture(":resources:images/practicas/Layout.jpg"))
+    arcade.draw_lrwh_rectangle_textured(0, 0, 200, 867, arcade.load_texture(":resources:images/practicas/Layout.jpg"))
     arcade.draw_lrwh_rectangle_textured(1300, 0, 200, 800, arcade.load_texture(":resources:images/practicas/LayoutDerecha.jpg"))
 
 
@@ -64,9 +65,12 @@ class StartView(arcade.View):
     def __init__(self):
         super().__init__()
         self.FondoMenuPrincipal = arcade.load_texture(":resources:images/practicas/FondoMenuPrincipal.jpg")
-
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
+
+    def setup(self):
+        """ Set up the game here. Call this function to restart the game. """
+        self.musica.play()
 
     def on_draw(self):
         arcade.start_render()
@@ -177,7 +181,9 @@ class MyGame(arcade.View):
         self.background4 = arcade.load_texture(":resources:images/practicas/NaveCayendose.jpg")
         self.background5 = arcade.load_texture(":resources:images/practicas/NaveCayendose2.jpg")
         self.background6 = arcade.load_texture(":resources:images/practicas/NaveCayendose3.jpg")
-        self.background7 = arcade.load_texture(":resources:images/practicas/FondoEspacioPlaneta.jpg")
+        self.background7 = arcade.load_texture(":resources:images/practicas/FondoGalaxia.jpg")
+        self.background8 = arcade.load_texture(":resources:images/practicas/FondoGalaxia2.jpg")
+        self.background9 = arcade.load_texture(":resources:images/practicas/FondoGalaxia3.jpg")
         self.score = 0
         self.Vidas = 3
         self.nivel = 1
@@ -186,7 +192,7 @@ class MyGame(arcade.View):
         self.lista2 = []
         self.lista3 = []
         self.nivel_1()
-        self.nave_sprite = nave(":resources:images/practicas/nave.png", SPRITE_SCALING_NAVE)
+        self.nave_sprite = nave(":resources:images/practicas/NewNave.png", SPRITE_SCALING_NAVE)
         self.nave_sprite.center_x = 750
         self.nave_sprite.center_y = 125
         self.nave_list.append(self.nave_sprite)
@@ -362,7 +368,7 @@ class MyGame(arcade.View):
             arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background1)
         if self.nivel == 3:
             arcade.draw_text("Nivel: 3", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_text("NaveSOS cura 1 vida si\nimpactas con ella pero si la\ndisparas restara puntos" ,95, 625, arcade.color.WHITE, font_size = 13, anchor_x="center")
+            arcade.draw_text("NaveSOS cura 1 vida si\nimpactas con ella pero si la\ndisparas restara puntos" ,95, 610, arcade.color.CYBER_YELLOW, font_size = 13, anchor_x="center")
             arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background2)
         if self.nivel == 4:
             arcade.draw_text("Nivel: 4", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
@@ -393,13 +399,13 @@ class MyGame(arcade.View):
             arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background7)
         if self.nivel == 13:
             arcade.draw_text("Nivel: 13", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background7)
+            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background8)
         if self.nivel == 14:
             arcade.draw_text("Nivel: 14", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background7)
+            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background8)
         if self.nivel == 15:
             arcade.draw_text("JEFE FINAL", 50, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background7)
+            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background9)
 
         self.enemy_list.draw()
         self.bullet_list.draw()
@@ -537,7 +543,7 @@ class MyGame(arcade.View):
 
             """Los enemigos te apuntan y no disparan todos a la vez si no en una franja de tiempo"""
             if random.randrange(120) == 0:
-                enemy1bullet = arcade.Sprite(":resources:images/space_shooter/laserBlue01.png", SPRITE_SCALING_BULLET)
+                enemy1bullet = arcade.Sprite(":resources:images/space_shooter/laserRed01.png", SPRITE_SCALING_BULLET)
                 enemy1bullet.center_x = start_x
                 enemy1bullet.center_y = start_y
                 enemy1bullet.angle = math.degrees(angle)
