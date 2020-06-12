@@ -17,7 +17,7 @@ MUSIC_VOLUME = 0.5
 """Para que no se sobrecargue todo de balas he puesto que haya un limite de balas en pantalla"""
 MAX_PLAYER_BULLETS = 5
 MAX_ENEMY1_BULLETS = 1
-BULLET_SPEED = 9
+BULLET_SPEED = 7
 
 def bordes():
     """" Los bordes para poner imagenes en ellos la puntuacion etc """
@@ -65,7 +65,7 @@ class StartView(arcade.View):
     def __init__(self):
         super().__init__()
         self.FondoMenuPrincipal = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"FondoMenuPrincipal.jpg")
-        self.Logo = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "LogoEquipoVideojuegos.png")
+        self.Logo = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "LogoEquipoVideojuegos2.png")
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
 
@@ -193,6 +193,8 @@ class MyGame(arcade.View):
         self.lista_mosquito = []
         self.lista_persecutora = []
         self.lista_bala = []
+        self.lista1 = []
+        self.lista2 = []
         self.lista3 = []
         self.nivel_1()
         self.nave_sprite = nave(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "NewNave.png", SPRITE_SCALING_NAVE)
@@ -341,7 +343,7 @@ class MyGame(arcade.View):
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
 
-        def perder(self):
+    def perder(self):
         """
         Termnina la partida
         :return: void
@@ -476,7 +478,7 @@ class MyGame(arcade.View):
         self.nave_list.draw()
         self.enemybullet_list.draw()
         self.explosions_list.draw()
-         if len(self.lista_mosquito) > 0:
+        if len(self.lista_mosquito) > 0:
             for r in self.lista_mosquito:
                 r.sprite.draw()
                 r.lista_balas.draw()
@@ -502,7 +504,7 @@ class MyGame(arcade.View):
 
         if len(self.lista3) > 0:
             for s in self.lista3:
-            s.sprite.draw()
+                s.sprite.draw()
 
     def on_key_press(self, key, modifiers):
         """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
@@ -693,7 +695,7 @@ class MyGame(arcade.View):
         elif len(self.enemy_list) == 0 and self.nivel == 2:
             self.nivel += 1
             self.nivel_3()
-        elif len(self.enemy_list) == 0 and len(self.lista_mosquito == 0 and self.nivel == 3:
+        elif len(self.enemy_list) == 0 and len(self.lista_mosquito) == 0 and self.nivel == 3:
             self.nivel += 1
             self.nivel_4()
         elif len(self.enemy_list) == 0 and len(self.lista_mosquito) == 0 and self.nivel == 4:
