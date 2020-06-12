@@ -189,8 +189,10 @@ class MyGame(arcade.View):
         self.Vidas = 3
         self.nivel = 1
         self.time_taken = 0
-        self.lista1 = []
-        self.lista2 = []
+        self.lista_elite = []
+        self.lista_mosquito = []
+        self.lista_persecutora = []
+        self.lista_bala = []
         self.lista3 = []
         self.nivel_1()
         self.nave_sprite = nave(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "NewNave.png", SPRITE_SCALING_NAVE)
@@ -240,7 +242,7 @@ class MyGame(arcade.View):
             self.enemy_list.append(enemy1)
         for j in range(1):
             enemy2 = Enemigos.Mosquito()
-            self.lista1.append(enemy2)
+            self.lista_mosquito.append(enemy2)
         for k in range(1):
             enemy4 = Enemigos.NaveSOS()
             self.lista3.append(enemy4)
@@ -253,20 +255,12 @@ class MyGame(arcade.View):
             self.enemy_list.append(enemy1)
         for j in range(4):
             enemy2 = Enemigos.Mosquito()
-            self.lista1.append(enemy2)
+            self.lista_mosquito.append(enemy2)
 
     def nivel_5(self):
         for i in range(0):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-        for j in range(0):
-            enemy2 = Enemigos.Mosquito()
-            self.lista1.append(enemy2)
-        for k in range(5):
-            enemy3 = Enemigos.Bala_Rebot()
-            self.lista2.append(enemy3)
+            enemy3 = Enemigos.Mosquito_Elite()
+            self.lista_elite.append(enemy3)
 
     def nivel_6(self):
         for i in range(20):
@@ -347,6 +341,76 @@ class MyGame(arcade.View):
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
 
+        def perder(self):
+        """
+        Termnina la partida
+        :return: void
+        """
+        game_over_view = GameOverView()
+        game_over_view.time_taken = self.time_taken
+        self.window.set_mouse_visible(True)
+        self.window.show_view(game_over_view)
+
+    def colisiones_sprites(self, lsta_enemigos):
+        """
+        Comprueba las colisiones entre las balas del jugador y los distintos sprites
+        lista ---> void
+        :param lsta_enemigos : lista cuyos elementos deben tener un atributo llamado sprite:
+        :return void:
+        """
+        for venga in lsta_enemigos:  # Para chequear las colisiones entre las balas del jugador y distintos sprites
+            for bala in self.bullet_list:
+                if arcade.check_for_collision(venga.sprite, bala):
+                    self.bullet_list.remove(bala)
+                    venga.vidas -= 1
+                    if venga.vidas == 0:
+                        lsta_enemigos.remove(venga)
+
+    def colsiones_bala_mosquito(self, lsta_mosquitos):
+        """
+        Comprueba las colisiones entre las balas del los enemigos tipo mosquito y el jugador
+        lista ---> void
+        :param lsta_mosquitos : lista cuyos elementos deben tener un atributo llamado bala:
+        :return void:
+        """
+        for s in lsta_mosquitos:  # Revisa colisiones entre los sprites llamados bala y el jugador
+            colision = arcade.check_for_collision_with_list(s.bala, self.nave_list)
+            for self.nave_sprite in colision:
+                s.lista_balas.pop()
+                self.Vidas -= 1
+                if self.Vidas <= 0:
+                    self.perder()
+
+    def colisiones_lista_balas(self, lista_balas):
+        """
+        Comprueba las colisiones entre la nave del jugador y un grupo de sprites
+        lista ---> void
+        :param lsta_enemigos : lista cuyos elementos deben ser sprites:
+        :return void:
+        """
+        for enemy1bullet in lista_balas:  # Revisa colisiones entre una lista de sprites y el jugador
+            hit_list2 = arcade.check_for_collision_with_list(enemy1bullet, self.nave_list)
+            for self.nave_sprite in hit_list2:
+                self.Vidas -= 1
+                arcade.play_sound(self.hit_sound)
+                enemy1bullet.remove_from_sprite_lists()
+                if self.Vidas <= 0:
+                    self.perder()
+
+    def colision_persecucion(self, lista_persecuion):
+        """
+        Comprueba las colisiones entre el jugador y enemigos que le persiguen
+        lista ---> void
+        :param lsta_persecucion : lista cuyos elementos deben tener un atributo llamado sprite:
+        :return void:
+        """
+        for acoso in lista_persecuion:  # Para chequear las colisiones entre las balas que rebotan y la nace
+            if arcade.check_for_collision(self.nave_sprite, acoso.sprite):
+                self.Vidas -= 1
+                lista_persecuion.remove(acoso)
+                if self.Vidas <= 0:
+                    self.perder()
+
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
         self.window.set_mouse_visible(False)
@@ -412,13 +476,33 @@ class MyGame(arcade.View):
         self.nave_list.draw()
         self.enemybullet_list.draw()
         self.explosions_list.draw()
-        for k in self.lista1:
-            k.sprite.draw()
-            k.bala.draw()
-        for m in self.lista2:
-            m.sprite.draw()
-        for n in self.lista3:
-            n.sprite.draw()
+         if len(self.lista_mosquito) > 0:
+            for r in self.lista_mosquito:
+                r.sprite.draw()
+                r.lista_balas.draw()
+
+        if len(self.lista_elite) > 0:
+            for k in self.lista_elite:
+                k.sprite_arriba.draw()
+                k.sprite.draw()
+                k.lista_balas.draw()
+                for h in k.lista_mosquitos:
+                    h.sprite.draw()
+                    h.lista_balas.draw()
+                for h in k.lista_crias:
+                    h.sprite.draw()
+
+        if len(self.lista_persecutora) > 0:
+            for s in self.lista_persecutora:
+                s.sprite.draw()
+
+        if len(self.lista_bala) > 0:
+            for r in self.lista_bala:
+                r.sprite.draw()
+
+        if len(self.lista3) > 0:
+            for s in self.lista3:
+            s.sprite.draw()
 
     def on_key_press(self, key, modifiers):
         """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
@@ -492,13 +576,39 @@ class MyGame(arcade.View):
         self.explosions_list.update()
         self.nave_sprite.change_x = 0
         self.nave_sprite.change_y = 0
-        for l in self.lista2:
-            l.movimiento()
-        for k in self.lista1:
-            k.movimiento()
-            k.bala.update()
-        for j in self.lista3:
-            j.movimiento()
+
+        if len(self.lista_persecutora) > 0:
+            for k in self.lista_persecutora:
+                k.movimiento(self.nave_sprite)
+            self.colision_persecucion(self.lista_persecutora)
+            self.colisiones_sprites(self.lista_persecutora)
+
+        if len(self.lista_elite) > 0:
+            for i in self.lista_elite:
+                i.movimiento()
+                i.lista_balas.update()
+                self.colisiones_lista_balas(i.lista_balas)
+                self.colisiones_sprites(self.lista_elite)
+                for h in i.lista_mosquitos:
+                    h.movimiento()
+                    h.lista_balas.update()
+                self.colisiones_sprites(i.lista_mosquitos)
+                self.colsiones_bala_mosquito(i.lista_mosquitos)
+                self.colisiones_sprites(i.lista_crias)
+
+        if len(self.lista_mosquito) > 0:
+            for k in self.lista_mosquito:
+                k.movimiento()
+                k.lista_balas.update()
+            self.colisiones_sprites(self.lista_mosquito)
+            self.colsiones_bala_mosquito(self.lista_mosquito)
+
+        if len(self.lista_bala) > 0:
+            for r in self.lista_bala:
+                r.movimiento()
+            self.colisiones_sprites(self.lista_bala)
+            self.colision_persecucion(self.lista_bala)
+
 
         """Para calculaar la velocidad segun las teclas que pulses"""
         if self.up_pressed and not self.down_pressed:
@@ -575,62 +685,6 @@ class MyGame(arcade.View):
                 enemy1bullet.remove_from_sprite_lists()
         self.enemybullet_list.update()
 
-        """Para comprobar las colisiones entre las balas que rebotan y la nave"""
-        for rueda in self.lista2:
-            if arcade.check_for_collision(self.nave_sprite, rueda.sprite):
-                self.Vidas -= 1
-                self.lista2.remove(rueda)
-                if self.Vidas <= 0:
-                    game_over_view = GameOverView()
-                    game_over_view.time_taken = self.time_taken
-                    self.window.show_view(game_over_view)
-        """Para comprobar las colisiones entre mosquitos y la nave"""
-        for venga in self.lista2:
-            for bala in self.bullet_list:
-                if arcade.check_for_collision(venga.sprite, bala):
-                    self.bullet_list.remove(bala)
-                    venga.vidas -= 1
-                    if venga.vidas == 0:
-                        self.lista2 .remove(venga)
-                        self.score += 2
-                        self.window.total_score += 2
-        """Revision colisiones entre las balas del jugador y las balas que reboten"""
-        for venga in self.lista1:
-            for bala in self.bullet_list:
-                if arcade.check_for_collision(venga.sprite, bala):
-                    self.bullet_list.remove(bala)
-                    venga.vidas -= 1
-                    if venga.vidas == 0:
-                        self.lista1.remove(venga)
-                        self.score += 4
-                        self.window.total_score += 4
-        """Para comprobar las colisiones entre la nave el SOS"""
-        for naveSos in self.lista3:
-            if arcade.check_for_collision(self.nave_sprite, naveSos.sprite):
-                self.Vidas += 1
-                self.lista3.remove(naveSos)
-        """Para comprobar las colisiones entre NaveSOS y la nave"""
-        for venga in self.lista3:
-            for bala in self.bullet_list:
-                if arcade.check_for_collision(venga.sprite, bala):
-                    self.bullet_list.remove(bala)
-                    venga.vidas -= 1
-                    if venga.vidas == 0:
-                        self.lista3.remove(venga)
-                        self.score -= 3
-                        self.window.total_score -= 3
-            if naveSos.cor_Y < 0:
-                self.lista3.remove(venga)
-        """Revision colisiones entre las balas del jugador y las balas que reboten"""
-        for s in self.lista1:
-            colision = arcade.check_for_collision_with_list(s.bala, self.nave_list)
-            for self.nave_sprite in colision:
-                s.lista_balas.remove(s.lista_balas[0])
-                self.Vidas -= 1
-                if self.Vidas <= 0:
-                    game_over_view = GameOverView()
-                    game_over_view.time_taken = self.time_taken
-                    self.window.show_view(game_over_view)
 
         """Sistema de cambio de niveles"""
         if len(self.enemy_list) == 0 and self.nivel == 1:
@@ -639,13 +693,13 @@ class MyGame(arcade.View):
         elif len(self.enemy_list) == 0 and self.nivel == 2:
             self.nivel += 1
             self.nivel_3()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and len(self.lista3) == 0 and self.nivel == 3:
+        elif len(self.enemy_list) == 0 and len(self.lista_mosquito == 0 and self.nivel == 3:
             self.nivel += 1
             self.nivel_4()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 4:
+        elif len(self.enemy_list) == 0 and len(self.lista_mosquito) == 0 and self.nivel == 4:
             self.nivel += 1
             self.nivel_5()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 5:
+        elif len(self.lista_elite) == 0 and self.nivel == 5:
             intermedio1_view = Intermedio1View(self)
             self.window.show_view(intermedio1_view)
             self.nivel += 1
