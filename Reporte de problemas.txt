@@ -1,3 +1,4 @@
-El texto de movimientos dentro de controles no tiene ningun margen
+Al pasar pantalla historia se va hacia un lado ( el bug que ya conocemos)
 
-Las estadisticas en la pantalla de Game over no estan alineadas
+
+Cuando haces click con el boton izquierdo no salen disparos solo el sonido, 
