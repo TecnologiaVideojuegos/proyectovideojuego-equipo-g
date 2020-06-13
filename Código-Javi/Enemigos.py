@@ -62,9 +62,8 @@ class Bala_Rebot():
         self.cor_x = random.randint(300, 1000)
         self.cor_Y = 700
         self.direc = 0
-        self.sprite_animacion = [arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BalaRebota.png", center_x=self.cor_x, center_y=self.cor_Y)
-            , arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BalaRebotaCharged.png", center_x=self.cor_x,
-                            center_y=self.cor_Y)]
+        self.sprite_animacion = [arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BalaRebota.png", center_x=self.cor_x, center_y=self.cor_Y),
+                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BalaRebotaCharged.png", center_x=self.cor_x, center_y=self.cor_Y)]
         self.contador = 0
         self.sprite = self.sprite_animacion[0]
         self.vidas = 2
@@ -113,12 +112,12 @@ class Huevo():
         self.cor_y = coordenada_y
         self.contador = 0
         self.nacer = False
-        self.vidas = 2
+        self.vidas = 3
         self.animacion = 0
-        self.sprite_animacion = [arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "huevo.png", center_x=self.cor_x, center_y=self.cor_y),
-                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "huevo_1.png", center_x=self.cor_x, center_y=self.cor_y),
-                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "huevo_2.png", center_x=self.cor_x, center_y=self.cor_y),
-                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "huevo_3.png", center_x=self.cor_x, center_y=self.cor_y)]
+        self.sprite_animacion = [arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "hueva.png", center_x=self.cor_x, center_y=self.cor_y),
+                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "hueva_1.png", center_x=self.cor_x, center_y=self.cor_y),
+                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "hueva_2.png", center_x=self.cor_x, center_y=self.cor_y),
+                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "hueva_3.png", center_x=self.cor_x, center_y=self.cor_y)]
         self.sprite = self.sprite_animacion[self.animacion]
 
     def movimiento(self):
@@ -132,7 +131,7 @@ class Huevo():
             if self.contador > 60:  # cuando llega el momento, el huevo "nace"
                 self.nacer = True
 
-class Mosquito_Elite():  # Clase Mosquito De Elite
+class Mosquito_Elite(Enemy):  # Clase Mosquito De Elite
     def __init__(self):
         self.cor_x = random.randint(220, 1280)  # Las coordenadas iniciales de la mayoría de enemigos serán aleatorias
         self.cor_y = 645
@@ -141,7 +140,7 @@ class Mosquito_Elite():  # Clase Mosquito De Elite
         self.direc = random.randint(0, 1)  # Variable aleatoria que marcará el sentido inicial del enemigo al aparecer
         self.contador = 0  # Importante para la animación
         self.lista_balas = arcade.SpriteList()  # Lista que contendrá las balas
-        self.vidas = 4
+        self.vidas = 25
         self.tiempo = 0
         self.balas_contador = 0
         self.disparando = False  # booleano que indica si se esta disparando o no
@@ -152,7 +151,7 @@ class Mosquito_Elite():  # Clase Mosquito De Elite
         self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "EliteFlySaco.png", center_x=self.cor_x, center_y=self.cor_y - 111)
         # 2 sprites separados, de esta forma se consigue determinar una mejor hit-box
         self.sprite_arriba = self.sprite_animacion[0]
-        self.vidas = 1
+        self.vidas = 25
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
@@ -244,17 +243,16 @@ class Trimandibula(Enemy):
     def __init__(self):
         super().__init__()
         self.sprite_animacion = [
-            arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Trimandibula-close.png", center_x=self.cor_x, center_y=self.cor_y),
-            arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "EliteFlyBack.png",center_x=self.cor_x, center_y=self.cor_y)]
+            arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Trimandibulaclose.png", center_x=self.cor_x, center_y=self.cor_y),
+            arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "TrimandibulaOpen.png", center_x=self.cor_x, center_y=self.cor_y)]
         self.direc = random.randint(0, 1)  # Variable aleatoria que marcará el sentido inicial del enemigo al aparecer
         self.direc_y = 0
         self.contador = 0  # Importante para la animación
         self.lista_balas = arcade.SpriteList()  # Lista que contendrá las balas
-        self.sprite = self.sprite_animacion[
-            self.contador]
+        self.sprite = self.sprite_animacion[self.contador]
         self.contador_espera = 0
         self.espera = False
-        self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+        self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Trimandibulabullet.png", center_x=self.cor_x, center_y=self.cor_y)
         self.vidas = 5
 
     def movimiento(self):
@@ -270,20 +268,19 @@ class Trimandibula(Enemy):
         elif self.direc_y == 1:
             self.cor_y += 1
 
-        if self.cor_x < 220:  # cambia la dirección del enemigo al llegar a los bordes
+        if self.cor_x <= 220:  # cambia la dirección del enemigo al llegar a los bordes
             self.direc = 1
 
-        elif self.cor_x > 1280:
+        elif self.cor_x >= 1280:
             self.direc = 0
 
-        if self.cor_y < 420:
+        if self.cor_y <= 420:
             self.direc_y = 1
 
-        if self.cor_y > 750:
+        if self.cor_y >= 750:
             self.direc_y = 0
 
-        self.sprite = self.sprite_animacion[
-            self.contador]  # Seleccionamos el sprite a través del contador, de esta forma el sprite cambia sin alterar
+        self.sprite = self.sprite_animacion[self.contador]  # Seleccionamos el sprite a través del contador, de esta forma el sprite cambia sin alterar
         # el rendimiento
         # de esta forma se consigue un mejor rendimiento
         self.sprite.center_x = self.cor_x  # reseteamos coordenadas ya que las hemos cambiado
@@ -372,11 +369,12 @@ class NaveSOS(Enemy):
     def __init__(self):
         super().__init__()
         self.cor_x = random.randint(300, 1000)
-        self.cor_Y = 800
+        self.cor_y = 800
         self.vidas = 1
         self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Nave_ayuda.png", 1.25)
 
     def movimiento(self):
-        self.cor_Y -= 3
+        self.cor_y -= 3
         self.sprite.center_x = self.cor_x
-        self.sprite.center_y = self.cor_Y
+        self.sprite.center_y = self.cor_y
+
