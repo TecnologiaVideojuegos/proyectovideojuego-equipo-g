@@ -192,9 +192,9 @@ class MyGame(arcade.View):
         self.lista_elite = []
         self.lista_mosquito = []
         self.lista_persecutora = []
+        self.lista_trimandibula = []
         self.lista_bala = []
-        self.lista1 = []
-        self.lista2 = []
+        self.lista_cria = []
         self.lista3 = []
         self.nivel_1()
         self.nave_sprite = nave(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "NewNave.png", SPRITE_SCALING_NAVE)
@@ -261,24 +261,34 @@ class MyGame(arcade.View):
 
     def nivel_5(self):
         for i in range(0):
+            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png",SPRITE_SCALING_ENEMY)
+            enemy1.center_x = random.randrange(340, 1200)
+            enemy1.center_y = random.randrange(400, 790)
+        for l in range(1):
             enemy3 = Enemigos.Mosquito_Elite()
             self.lista_elite.append(enemy3)
 
     def nivel_6(self):
-        for i in range(20):
+        self.nave_sprite.center_x = 750
+        self.nave_sprite.center_y = 125
+        for i in range(0):
             enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
-            self.nave_sprite.center_x = 750
-            self.nave_sprite.center_y = 125
             self.enemy_list.append(enemy1)
+        for m in range(2):
+            enemy5 = Enemigos.Trimandibula()
+            self.lista_trimandibula.append(enemy5)
 
     def nivel_7(self):
-        for i in range(23):
+        for i in range(0):
             enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
+        for n in range(2):
+            enemy6 = Enemigos.Cria()
+            self.lista_cria.append(enemy6)
 
     def nivel_8(self):
         for i in range(25):
@@ -335,7 +345,6 @@ class MyGame(arcade.View):
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
-
     def nivel_15(self):
         for i in range(1):
             enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
@@ -424,8 +433,7 @@ class MyGame(arcade.View):
         arcade.draw_text(f"Score: {self.score}", 10, 725, arcade.color.WHITE, 14)
         arcade.draw_text(f"Vidas: {self.Vidas}", 10, 750, arcade.color.WHITE, 14)
         time_taken_formatted = f"{round(self.time_taken, 2)} segundos"
-        arcade.draw_text(f"Tiempo: {time_taken_formatted}", 95, 700, arcade.color.WHITE, font_size=15,
-                         anchor_x="center")
+        arcade.draw_text(f"Tiempo: {time_taken_formatted}", 95, 700, arcade.color.WHITE, font_size=15, anchor_x="center")
         if self.nivel == 1:
             arcade.draw_text("Nivel: 1", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
             arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background1)
@@ -498,13 +506,23 @@ class MyGame(arcade.View):
             for s in self.lista_persecutora:
                 s.sprite.draw()
 
+        if len(self.lista_cria) > 0:
+            for l in self.lista_cria:
+                l.sprite.draw()
+
         if len(self.lista_bala) > 0:
-            for r in self.lista_bala:
-                r.sprite.draw()
+            for i in self.lista_bala:
+                i.sprite.draw()
 
         if len(self.lista3) > 0:
-            for s in self.lista3:
-                s.sprite.draw()
+            for t in self.lista3:
+                t.sprite.draw()
+
+        if len(self.lista_trimandibula) > 0:
+            for j in self.lista_trimandibula:
+                j.sprite.draw()
+                j.lista_balas.draw()
+
 
     def on_key_press(self, key, modifiers):
         """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
@@ -585,6 +603,12 @@ class MyGame(arcade.View):
             self.colision_persecucion(self.lista_persecutora)
             self.colisiones_sprites(self.lista_persecutora)
 
+        if len(self.lista_cria) > 0:
+            for l in self.lista_cria:
+                l.movimiento(self.nave_sprite)
+            self.colision_persecucion(self.lista_cria)
+            self.colisiones_sprites(self.lista_cria)
+
         if len(self.lista_elite) > 0:
             for i in self.lista_elite:
                 i.movimiento()
@@ -605,11 +629,24 @@ class MyGame(arcade.View):
             self.colisiones_sprites(self.lista_mosquito)
             self.colsiones_bala_mosquito(self.lista_mosquito)
 
+        if len(self.lista_trimandibula) > 0:
+            for j in self.lista_trimandibula:
+                j.movimiento()
+                j.lista_balas.update()
+                self.colisiones_sprites(self.lista_trimandibula)
+                self.colisiones_lista_balas(j.lista_balas)
+
         if len(self.lista_bala) > 0:
             for r in self.lista_bala:
                 r.movimiento()
             self.colisiones_sprites(self.lista_bala)
             self.colision_persecucion(self.lista_bala)
+
+        if len(self.lista3) > 0:
+            for l in self.lista3:
+                l.movimiento()
+            self.colisiones_sprites(self.lista3)
+            self.colision_persecucion(self.lista3)
 
 
         """Para calculaar la velocidad segun las teclas que pulses"""
@@ -641,6 +678,7 @@ class MyGame(arcade.View):
             if self.Vidas <= 0:
                 bullet.remove_from_sprite_lists()
         self.bullet_list.update()
+
 
         """Toda la programacion para que los enemigos te miren y te disparen, esta hecho gracias a la bibliteca math para aprovechar los angulos"""
         for enemy1 in self.enemy_list:
@@ -707,37 +745,37 @@ class MyGame(arcade.View):
             self.nivel += 1
             self.nivel_6()
             self.Vidas += 1
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 6:
+        elif len(self.lista_trimandibula) == 0 and self.nivel == 6:
             self.nivel += 1
             self.nivel_7()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 7:
+        elif len(self.lista_cria) == 0  and self.nivel == 7:
             self.nivel += 1
             self.nivel_8()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and len(self.lista3) == 0 and self.nivel == 8:
+        elif len(self.enemy_list) == 0 and len(self.lista3) == 0 and self.nivel == 8:
             self.nivel += 1
             self.nivel_9()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 9:
+        elif len(self.enemy_list) == 0 and self.nivel == 9:
             self.nivel += 1
             self.nivel_10()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 10:
+        elif len(self.enemy_list) == 0 and self.nivel == 10:
             intermedio2_view = Intermedio2View(self)
             self.window.show_view(intermedio2_view)
             self.nivel += 1
             self.Vidas += 1
             self.nivel_11()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 11:
+        elif len(self.enemy_list) == 0 and self.nivel == 11:
             self.nivel += 1
             self.nivel_12()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 12:
+        elif len(self.enemy_list) == 0 and self.nivel == 12:
             self.nivel += 1
             self.nivel_13()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and len(self.lista3) == 0 and self.nivel == 13:
+        elif len(self.enemy_list) == 0 and len(self.lista3) == 0 and self.nivel == 13:
             self.nivel += 1
             self.nivel_14()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 14:
+        elif len(self.enemy_list) == 0 and self.nivel == 14:
             self.nivel += 1
             self.nivel_15()
-        elif len(self.enemy_list) == 0 and len(self.lista1) == 0 and len(self.lista2) == 0 and self.nivel == 15:
+        elif len(self.enemy_list) == 0 and self.nivel == 15:
             victoria_view = VictoriaView()
             victoria_view.time_taken = self.time_taken
             self.window.show_view(victoria_view)
