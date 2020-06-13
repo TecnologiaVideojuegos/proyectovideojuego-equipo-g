@@ -1,3 +1,8 @@
+BULLET_SPEED = 5
+ 
+ 
+ 
+ 
  def nivel_1(self):
         for i in range(3):
             """Aparicion de enemigos en posiciones randomizadas dentro de unas cordenadas"""
