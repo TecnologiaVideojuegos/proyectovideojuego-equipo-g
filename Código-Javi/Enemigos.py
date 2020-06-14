@@ -384,7 +384,7 @@ class Pez_Linterna():
         self.cor_x = 750
         self.cor_y = 700
         self.direc = 1
-        self.vidas = 45  #numero de vidas
+        self.vidas = 28  #numero de vidas
         self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Linterna.png", center_y=self.cor_y, center_x=self.cor_x)
         self.contador = 0
         self.lista_balas = []
