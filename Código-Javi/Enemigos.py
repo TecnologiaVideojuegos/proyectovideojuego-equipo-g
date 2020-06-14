@@ -378,6 +378,7 @@ class NaveSOS(Enemy):
     def movimiento(self):
         self.cor_y -= 3
         self.sprite.center_y = self.cor_y
+        self.sprite.center_x = self.cor_x
 
 class Pez_Linterna():
     def __init__(self):
