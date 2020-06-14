@@ -1,99 +1,49 @@
-BULLET_SPEED = 5
- 
- 
- 
- 
- def nivel_1(self):
-        for i in range(3):
-            """Aparicion de enemigos en posiciones randomizadas dentro de unas cordenadas"""
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-
-    def nivel_2(self):
-        for i in range(7):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-
-    def nivel_3(self):
-        for i in range(10):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-        for j in range(1):
-            enemy2 = Enemigos.Mosquito()
-            self.lista_mosquito.append(enemy2)
-        for k in range(1):
-            enemy4 = Enemigos.NaveSOS()
-            self.lista3.append(enemy4)
-
-    def nivel_4(self):
-        for i in range(15):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-        for j in range(3):
-            enemy2 = Enemigos.Mosquito()
-            self.lista_mosquito.append(enemy2)
-
-    def nivel_5(self):
-        for i in range(0):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png",SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-        for l in range(1):
-            enemy3 = Enemigos.Mosquito_Elite()
-            self.lista_elite.append(enemy3)
-
-    def nivel_6(self):
+    def nivel_11(self):
         self.nave_sprite.center_x = 750
         self.nave_sprite.center_y = 125
-        for i in range(0):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-        for m in range(4):
-            enemy5 = Enemigos.Trimandibula()
-            self.lista_trimandibula.append(enemy5)
+        for i in range(2):
+            enem8 = Enemigos.Escudo()
+            self.lista_barrera.append(enem8)
+        for j in range(2):
+            enem9 = Enemigos.Nave_enemiga()
+            self.lista_mosquito.append(enem9)
 
-    def nivel_7(self):
-        for i in range(0):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
-        for n in range(6):
-            enemy6 = Enemigos.Cria()
-            self.lista_cria.append(enemy6)
+    def nivel_12(self):
+        for i in range(1):
+            enem8 = Enemigos.Escudo()
+            self.lista_barrera.append(enem8)
+        for j in range(3):
+            enem9 = Enemigos.Nave_enemiga()
+            self.lista_mosquito.append(enem9)
 
-    def nivel_8(self):
-        for i in range(10):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
+    def nivel_13(self):
+        for i in range(5):
+            enemy1 = arcade.Sprite(
+                ":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png",
+                SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
         for k in range(1):
             enemy4 = Enemigos.NaveSOS()
             self.lista3.append(enemy4)
-        for m in range(2):
-            enemy5 = Enemigos.Trimandibula()
-            self.lista_trimandibula.append(enemy5)
-
-    def nivel_9(self):
-        for i in range(8):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1140)
+        for j in range(4):
+            enem9 = Enemigos.Nave_enemiga()
+            self.lista_mosquito.append(enem9)
+    def nivel_14(self):
+        for i in range(6):
+            enemy1 = arcade.Sprite(
+                ":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png",
+                SPRITE_SCALING_ENEMY)
+            enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
-        for m in range(3):
-            enemy5 = Enemigos.Trimandibula()
-            self.lista_trimandibula.append(enemy5)
-        for n in range(3):
-            enemy6 = Enemigos.Cria()
-            self.lista_cria.append(enemy6)
+        for j in range(4):
+            enem9 = Enemigos.Nave_enemiga()
+            self.lista_mosquito.append(enem9)
+    def nivel_15(self):
+        self.nave_sprite.center_x = 750
+        self.nave_sprite.center_y = 125
+        for i in range(1):
+            enemy10 = Enemigos.Jefe_Final()
+            self.lista_jefeFinal.append(enemy10)
