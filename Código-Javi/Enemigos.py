@@ -583,7 +583,8 @@ class Escudo(Enemy):  # Clase Escudo; bloquea disparos, solo sirve para eso
         self.direc = random.randint(0, 1)  # Variable aleatoria que marcará el sentido inicial del enemigo al aparecer
         self.vidas = 50
         self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Barrera.png", center_y=self.cor_y, center_x=self.cor_x)
-
+        self.score = 0
+        
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
             self.cor_x += 4
