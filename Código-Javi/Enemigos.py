@@ -375,6 +375,109 @@ class NaveSOS(Enemy):
 
     def movimiento(self):
         self.cor_y -= 3
-        self.sprite.center_x = self.cor_x
         self.sprite.center_y = self.cor_y
 
+class Pez_Linterna():
+    def __init__(self):
+        self.cor_x = 750
+        self.cor_y = 700
+        self.direc = 1
+        self.vidas = 30  #numero de vidas
+        self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Linterna.png", center_y=self.cor_y, center_x=self.cor_x)
+        self.contador = 0
+        self.lista_balas = []
+        self.lista_torretas = []
+        self.creaTorretas()
+
+    def movimiento(self):
+        if self.direc == 1:  # cambia las coordenadas del enemigo
+            self.sprite.change_x = 3
+
+        elif self.direc == 0:
+            self.sprite.change_x = -3
+
+        if self.sprite.center_x < 520:  # cambia la dirección del enemigo al llegar a los bordes
+            self.direc = 1
+
+        elif self.sprite.center_x > 980:
+            self.direc = 0
+
+        self.contador += 1
+        if self.contador % 70 == 0:
+            self.creaBalasRebota()
+
+    def creaTorretas(self):
+        for i in range(2):
+            if i == 0:
+                torreto = Torreta(238, 531)
+                torreto.direc = 1
+
+            if i == 1:
+                torreto = Torreta(1263, 531)
+                torreto.direc = -1
+            self.lista_torretas.append(torreto)
+
+    def creaBalasRebota(self):
+        for i in range(2):
+            if i == 0:
+                bala_rebota = Bala_Rebot()
+                bala_rebota.direc = 1
+                bala_rebota.cor_x = random.randint(400, 750)
+
+            elif i == 1:
+                bala_rebota = Bala_Rebot()
+                bala_rebota.direc = 0
+                bala_rebota.cor_x = random.randint(750, 1000)
+            self.lista_balas.append(bala_rebota)
+
+class Torreta():
+    def __init__(self, x, y):
+        self.cor_x = x
+        self.cor_y = y
+        self.direc = 1  # Marca el angulo
+        self.contador = 0 # contador para los disparos
+        self.lista_balas = arcade.SpriteList()  # Lista que contendrá las balas
+        self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Torreta.png", center_x=self.cor_x, center_y=self.cor_y)
+        self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+        self.vidas = 25
+        self.listo_disparo = True  # booleano para disparar y dejar de disparar
+        self.numero_balas = 0 # pequeño contador que contará el numero de disparos
+        self.direcciones()
+
+    def movimiento(self):
+        self.contador += 1
+        if self.listo_disparo and self.contador % 20 == 0:
+            y = self.sprite.bottom
+            for s in range(3):
+                self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Torreta_bullet.png", center_x=self.x, center_y=y)
+                if s == 0:
+                    self.bala.change_y = -5
+                    self.bala.change_x = 9 * self.direc
+                elif s == 1:
+                    self.bala.change_y = -5
+                    self.bala.change_x = 11 * self.direc
+                elif s == 2:
+                    self.bala.change_y = -5
+                    self.bala.change_x = 7 * self.direc
+                self.lista_balas.append(self.bala)
+            self.numero_balas += 3
+
+            if self.numero_balas == 21:   # si el contador de disparos llega a 21 se detiene
+                self.listo_disparo = False
+
+        if len(self.lista_balas) > 0:
+            for k in self.lista_balas:
+                if k.center_y <= 0 or k.center_x > 1300 or k.center_x < 200:
+                    self.lista_balas.remove(k)
+        elif len(self.lista_balas) == 0:
+            self.listo_disparo = True   # se puede volver a disparar
+            self.numero_balas = 0    # se resetea el contador
+
+    def direcciones(self):
+        if self.direc == 1:  # cambia las coordenadas del enemigo
+            self.sprite.angle = 45
+            self.x = self.sprite.right
+
+        elif self.direc == -1:
+            self.sprite.angle = (360 - 45)
+            self.x = self.sprite.left
