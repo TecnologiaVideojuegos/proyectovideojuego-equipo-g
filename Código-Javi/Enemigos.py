@@ -381,11 +381,8 @@ class NaveSOS(Enemy):
         self.vidas = 1
         self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Nave_ayuda.png", center_y= self.cor_y, center_x=self.cor_x)
         self.score = -100
+        self.sprite.change_y = -3
 
-    def movimiento(self):
-        self.cor_y -= 3
-        self.sprite.center_y = self.cor_y
-        self.sprite.center_x = self.cor_x
 
 class Pez_Linterna():
     def __init__(self):
