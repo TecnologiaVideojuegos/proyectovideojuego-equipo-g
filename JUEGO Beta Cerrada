@@ -648,6 +648,8 @@ class MyGame(arcade.View):
         if len(self.lista3) > 0:
             for k in self.lista3:
                 k.sprite.update()
+                if k.sprite.center_y < 0:
+                    self.lista3.remove(k)
             self.colision_naveSoS(self.lista3)
             self.colisiones_sprites(self.lista3)
 
