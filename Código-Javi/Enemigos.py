@@ -60,11 +60,13 @@ class Mosquito(Enemy):  # Clase Mosquito
 class Bala_Rebot():
     def __init__(self):
         self.cor_x = random.randint(300, 1000)
-        self.cor_Y = 700
+        self.cor_y = 700
         self.direc = 0
-        self.sprite_animacion = [arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BalaRebota.png", center_x=self.cor_x, center_y=self.cor_Y),
-                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BalaRebotaCharged.png", center_x=self.cor_x, center_y=self.cor_Y)]
+        self.direc_y = 0
+        self.sprite_animacion = [arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BalaRebota.png", center_x=self.cor_x, center_y=self.cor_y),
+                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BalaRebotaCharged.png", center_x=self.cor_x, center_y=self.cor_y)]
         self.contador = 0
+        self.contador_animacion = 0
         self.sprite = self.sprite_animacion[0]
         self.vidas = 2
 
@@ -382,7 +384,7 @@ class Pez_Linterna():
         self.cor_x = 750
         self.cor_y = 700
         self.direc = 1
-        self.vidas = 30  #numero de vidas
+        self.vidas = 45  #numero de vidas
         self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Linterna.png", center_y=self.cor_y, center_x=self.cor_x)
         self.contador = 0
         self.lista_balas = []
