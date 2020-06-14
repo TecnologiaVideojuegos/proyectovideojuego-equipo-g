@@ -405,7 +405,7 @@ class Pez_Linterna():
             self.direc = 0
 
         self.contador += 1
-        if self.contador % 70 == 0:
+        if self.contador % 99 == 0:
             self.creaBalasRebota()
 
     def creaTorretas(self):
@@ -448,19 +448,19 @@ class Torreta():
 
     def movimiento(self):
         self.contador += 1
-        if self.listo_disparo and self.contador % 20 == 0:
+        if self.listo_disparo and self.contador % 10 == 0:
             y = self.sprite.bottom
             for s in range(3):
                 self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Torreta_bullet.png", center_x=self.x, center_y=y)
                 if s == 0:
-                    self.bala.change_y = -5
-                    self.bala.change_x = 9 * self.direc
+                    self.bala.change_y = -7
+                    self.bala.change_x = 3 * self.direc
                 elif s == 1:
-                    self.bala.change_y = -5
+                    self.bala.change_y = -3
                     self.bala.change_x = 11 * self.direc
                 elif s == 2:
-                    self.bala.change_y = -5
-                    self.bala.change_x = 7 * self.direc
+                    self.bala.change_y = -3
+                    self.bala.change_x = 4 * self.direc
                 self.lista_balas.append(self.bala)
             self.numero_balas += 3
 
@@ -476,10 +476,224 @@ class Torreta():
             self.numero_balas = 0    # se resetea el contador
 
     def direcciones(self):
-        if self.direc == 1:  # cambia las coordenadas del enemigo
+        if self.direc == 1:  # cuestión estética sobre el ángulo
             self.sprite.angle = 45
             self.x = self.sprite.right
 
         elif self.direc == -1:
             self.sprite.angle = (360 - 45)
             self.x = self.sprite.left
+
+class Misil(Cria):
+    def __init__(self):
+        super().__init__()
+        self.sprite_animacion = [arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Misil.png", center_x=self.cor_x, center_y=self.cor_y),
+                                 arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Misil_2.png", center_x=self.cor_x, center_y=self.cor_y)]
+        self.contador = 0
+        self.variacion = 0
+        self.vidas = 4
+
+class Nave_enemiga(Enemy):
+    def __init__(self):
+        super().__init__()
+
+        self.direc = random.randint(0, 1)  # Variable aleatoria que marcará el sentido inicial del enemigo al aparecer
+        self.direc_y = 0
+        self.contador = 0  # Importante para disparar
+        self.lista_balas = arcade.SpriteList()  # Lista que contendrá las balas
+        self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Nave_enemiga.png", center_x=self.cor_x, center_y=self.cor_y)
+        self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+        self.vidas = 5
+        self.velocidad_x = 8
+        self.velocidad_y = 3
+        self.listo_disparo = True
+        self.numero_balas = 0  # Indicará el numero de balas disparadas
+
+    def movimiento(self):
+        if self.direc == 1:  # cambia las coordenadas del enemigo
+            self.cor_x += self.velocidad_x
+
+        elif self.direc == 0:
+            self.cor_x -= self.velocidad_x
+
+        if self.direc_y == 0:
+            self.cor_y -= self.velocidad_y
+
+        elif self.direc_y == 1:
+            self.cor_y += self.velocidad_y
+
+        if self.cor_x < 220:  # cambia la dirección del enemigo al llegar a los bordes
+            self.direc = 1
+
+        elif self.cor_x > 1280:
+            self.direc = 0
+
+        if self.cor_y < 420:
+            self.direc_y = 1
+
+        if self.cor_y > 750:
+            self.direc_y = 0
+
+        self.sprite.center_x = self.cor_x  # reseteamos coordenadas ya que las hemos cambiado, se hace así para reutilizar
+        self.sprite.center_y = self.cor_y  # las funciones dedicadas a los enemigos tipo mosquito
+
+        self.contador += 1
+        if self.listo_disparo and self.contador % 20 == 0:
+            self.velocidad_x = 0  # Cuando dispara la nave se detiene
+            self.velocidad_y = 0
+            y = self.sprite.bottom
+            for s in range(2):  # dispara dos balas
+                if s == 0:
+                    x = self.sprite.left
+                    self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=x, center_y=y)
+                    self.bala.change_y = -7
+                elif s == 1:
+                    x = self.sprite.right
+                    self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=x, center_y=y)
+                    self.bala.change_y = -7
+                self.lista_balas.append(self.bala)
+            self.numero_balas += 2
+
+            if self.numero_balas == 8:  # cuando el contador de balas llegue a 8 se detiene el proceso de disparo
+                self.listo_disparo = False
+                self.velocidad_x = 8
+                self.velocidad_y = 3
+
+        if len(self.lista_balas) > 0:
+            for k in self.lista_balas:
+                if k.center_y <= 0:
+                    self.lista_balas.remove(k)
+        elif len(self.lista_balas) == 0:  # se resetean las variables involucradas en el disparo
+            self.listo_disparo = True
+            self.numero_balas = 0
+
+class Escudo(Enemy):  # Clase Escudo; bloquea disparos, solo sirve para eso
+    def __init__(self):
+        super().__init__()
+        self.cor_y = 450
+
+        self.direc = random.randint(0, 1)  # Variable aleatoria que marcará el sentido inicial del enemigo al aparecer
+        self.vidas = 50
+        self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Barrera.png", center_y=self.cor_y, center_x=self.cor_x)
+
+    def movimiento(self):
+        if self.direc == 1:  # cambia las coordenadas del enemigo
+            self.cor_x += 4
+
+        elif self.direc == 0:
+            self.cor_x -= 4
+
+        if self.cor_x < 220:  # cambia la dirección del enemigo al llegar a los bordes
+            self.direc = 1
+
+        elif self.cor_x > 1280:
+            self.direc = 0
+
+        self.sprite.center_x = self.cor_x  # reseteamos coordenadas ya que las hemos cambiado
+        self.sprite.center_y = self.cor_y
+
+class Jefe_Final():
+    def __init__(self):
+        self.cor_x = 750
+        self.cor_y = 600
+        self.spriteCuerpo = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Cuerpo.png", center_x=self.cor_x, center_y=self.cor_y)
+        self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Cerebro.png", center_x=self.cor_x, center_y=self.cor_y)
+
+        self.direc = random.randint(0, 1)  # Variable aleatoria que marcará el sentido inicial del enemigo al aparecer
+        self.direc_y = 0
+        self.contador = 0
+        self.lista_balas = arcade.SpriteList()  # Lista que contendrá las balas
+        self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+        self.vidas = 30
+        self.lista_misiles = []
+
+    def movimiento(self):
+        if self.direc == 1:  # cambia las coordenadas del enemigo
+            self.cor_x += 5
+
+        elif self.direc == 0:
+            self.cor_x -= 5
+
+        if self.direc_y == 0:
+            self.cor_y -= 1
+
+        elif self.direc_y == 1:
+            self.cor_y += 1
+
+        if self.cor_x < 300:  # cambia la dirección del enemigo al llegar a los bordes
+            self.direc = 1
+
+        elif self.cor_x > 1280:
+            self.direc = 0
+
+        if self.cor_y < 501:
+            self.direc_y = 1
+
+        if self.cor_y > 750:
+            self.direc_y = 0
+
+        self.spriteCuerpo.center_x = self.cor_x
+        self.sprite.center_x = self.cor_x
+        self.spriteCuerpo.center_y = self.cor_y
+        self.sprite.center_y = self.cor_y
+
+        self.contador += 1
+        if self.contador % 10 == 0:
+            aleatorio = random.randint(1, 8)
+            if aleatorio == 1:
+                self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+                self.bala.center_y = self.sprite.center_y - 87
+                self.bala.center_x = self.sprite.center_x - 99
+                self.bala.change_y = -1 * random.randint(5, 15)
+
+            elif aleatorio == 2:
+                self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+                self.bala.center_y = self.sprite.center_y - 61
+                self.bala.center_x = self.sprite.center_x - 153
+                self.bala.change_y = -1 * random.randint(5, 15)
+
+            elif aleatorio == 3:
+                self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+                self.bala.center_y = self.sprite.center_y + 2
+                self.bala.center_x = self.sprite.center_x - 164
+                self.bala.change_y = -1 * random.randint(5, 15)
+
+            elif aleatorio == 4:
+                self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+                self.bala.center_y = self.sprite.center_y + 44
+                self.bala.center_x = self.sprite.center_x - 223
+                self.bala.change_y = -1 * random.randint(5, 15)
+
+            elif aleatorio == 5:
+                self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+                self.bala.center_y = self.sprite.center_y - 87
+                self.bala.center_x = self.sprite.center_x + 99
+                self.bala.change_y = -1 * random.randint(5, 15)
+
+            elif aleatorio == 6:
+                self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+                self.bala.center_y = self.sprite.center_y - 61
+                self.bala.center_x = self.sprite.center_x + 153
+                self.bala.change_y = -1 * random.randint(5, 15)
+
+            elif aleatorio == 7:
+                self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+                self.bala.center_y = self.sprite.center_y + 2
+                self.bala.center_x = self.sprite.center_x + 164
+                self.bala.change_y = -1 * random.randint(5, 15)
+
+            elif aleatorio == 8:
+                self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
+                self.bala.center_y = self.sprite.center_y + 44
+                self.bala.center_x = self.sprite.center_x + 223
+                self.bala.change_y = -1 * random.randint(5, 15)
+
+            self.lista_balas.append(self.bala)
+
+        if self.contador % 200 == 0:
+            self.creaBalasRebota()
+
+    def creaBalasRebota(self):
+        for i in range(1):
+            misile = Misil()
+            self.lista_misiles.append(misile)

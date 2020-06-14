@@ -196,6 +196,7 @@ class MyGame(arcade.View):
         self.lista_bala = []
         self.lista_lintera = []
         self.lista_barrera = []
+        self.lista_jefeFinal = []
         self.lista3 = []
         self.nivel_1()
         self.nave_sprite = nave(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "NewNave.png", SPRITE_SCALING_NAVE)
@@ -325,11 +326,12 @@ class MyGame(arcade.View):
     def nivel_11(self):
         self.nave_sprite.center_x = 750
         self.nave_sprite.center_y = 125
-        for i in range(1):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
+        for i in range(2):
+            enem8 = Enemigos.Escudo()
+            self.lista_jefeFinal.append(enem8)
+        for j in range(2):
+            enem9 = Enemigos.Nave_enemiga()
+            self.lista_mosquito.append(enem9)
 
     def nivel_12(self):
         for i in range(1):
@@ -357,10 +359,8 @@ class MyGame(arcade.View):
         self.nave_sprite.center_x = 750
         self.nave_sprite.center_y = 125
         for i in range(1):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
+            enemy10 = Enemigos.Jefe_Final()
+            self.lista_jefeFinal.append(enemy10)
 
     def perder(self):
         """
@@ -522,6 +522,14 @@ class MyGame(arcade.View):
             for k in self.lista_barrera:
                 k.sprite.draw()
 
+        if len(self.lista_jefeFinal) > 0:
+            for k in self.lista_jefeFinal:
+                k.sprite.draw()
+                k.spriteCuerpo.draw()
+                k.lista_balas.draw()
+                for j in k.lista_misiles:
+                    j.sprite.draw()
+
     def on_key_press(self, key, modifiers):
         """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
         if key == arcade.key.W:
@@ -652,6 +660,17 @@ class MyGame(arcade.View):
                 k.movimiento()
             self.colisiones_sprites(self.lista_barrera)
 
+        if len(self.lista_jefeFinal) > 0:
+            for k in self.lista_jefeFinal:
+                k.movimiento()
+                k.lista_balas.update()
+                self.colisiones_lista_balas(k.lista_balas)
+                self.colisiones_sprites(self.lista_jefeFinal)
+                for l in k.lista_misiles:
+                    l.movimiento(self.nave_sprite)
+                self.colision_persecucion(k.lista_misiles)
+                self.colisiones_sprites(k.lista_misiles)
+
 
         """Para calculaar la velocidad segun las teclas que pulses"""
         if self.up_pressed and not self.down_pressed:
@@ -767,7 +786,7 @@ class MyGame(arcade.View):
             self.nivel += 1
             self.Vidas += 1
             self.nivel_11()
-        elif len(self.enemy_list) == 0 and self.nivel == 11:
+        elif len(self.lista_mosquito) == 0 and self.nivel == 11:
             self.nivel += 1
             self.nivel_12()
         elif len(self.enemy_list) == 0 and self.nivel == 12:
@@ -781,7 +800,7 @@ class MyGame(arcade.View):
             self.window.show_view(intermediofinal_view)
             self.nivel += 1
             self.nivel_15()
-        elif len(self.enemy_list) == 0 and self.nivel == 15:
+        elif len(self.lista_jefeFinal) == 0 and self.nivel == 15:
             victoria_view = VictoriaView()
             victoria_view.time_taken = self.time_taken
             self.window.show_view(victoria_view)
