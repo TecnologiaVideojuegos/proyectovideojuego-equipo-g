@@ -185,6 +185,7 @@ class MyGame(arcade.View):
         self.background7 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoGalaxia.jpg")
         self.background8 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoGalaxia2.jpg")
         self.background9 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoGalaxia3.jpg")
+        self.background10 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "JefePezLinternaFondo.jpg")
         self.score = 0
         self.Vidas = 3
         self.nivel = 1
@@ -458,7 +459,7 @@ class MyGame(arcade.View):
             arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background5)
         if self.nivel == 10:
             arcade.draw_text("SEGUNDO JEFE", 60, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
-            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background6)
+            arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background10)
         if self.nivel == 11:
             arcade.draw_text("Nivel: 11", 40, 675, arcade.color.WHITE, font_size=15, anchor_x="center")
             arcade.draw_lrwh_rectangle_textured(200, 0, 1100, 800, self.background7)
@@ -609,8 +610,8 @@ class MyGame(arcade.View):
                 for h in i.lista_mosquitos:
                     h.movimiento()
                     h.lista_balas.update()
+                    self.colisiones_lista_balas(h.lista_balas)
                 self.colisiones_sprites(i.lista_mosquitos)
-                self.colsiones_bala_mosquito(i.lista_mosquitos)
                 self.colisiones_sprites(i.lista_crias)
 
         if len(self.lista_mosquito) > 0:
@@ -618,7 +619,7 @@ class MyGame(arcade.View):
                 k.movimiento()
                 k.lista_balas.update()
                 self.colisiones_lista_balas(k.lista_balas)
-            self.colsiones_bala_mosquito(self.lista_mosquito)
+            self.colisiones_sprites(self.lista_mosquito)
 
         if len(self.lista_bala) > 0:
             for r in self.lista_bala:
