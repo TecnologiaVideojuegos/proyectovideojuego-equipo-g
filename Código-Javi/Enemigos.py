@@ -379,7 +379,7 @@ class NaveSOS(Enemy):
         self.cor_x = random.randint(300, 1000)
         self.cor_y = 800
         self.vidas = 1
-        self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Nave_ayuda.png", 1.25)
+        self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Nave_ayuda.png", center_y= self.cor_Y, center_x=self.cor_x)
         self.score = -100
 
     def movimiento(self):
