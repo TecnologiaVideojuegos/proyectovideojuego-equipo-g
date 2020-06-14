@@ -22,8 +22,8 @@ BULLET_SPEED = 7
 def bordes():
     """" Los bordes para poner imagenes en ellos la puntuacion etc """
 
-    arcade.draw_lrwh_rectangle_textured(0, 0, 200, 867, arcade.load_texture(":resources:images/practicas/Layout.jpg"))
-    arcade.draw_lrwh_rectangle_textured(1300, 0, 200, 800, arcade.load_texture(":resources:images/practicas/LayoutDerecha.jpg"))
+    arcade.draw_lrwh_rectangle_textured(0, 0, 200, 867, arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Layout.jpg"))
+    arcade.draw_lrwh_rectangle_textured(1300, 0, 200, 800, arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"LayoutDerecha.jpg"))
 
 
 class Explosion(arcade.Sprite):
@@ -379,6 +379,7 @@ class MyGame(arcade.View):
                 if arcade.check_for_collision(venga.sprite, bala):
                     self.bullet_list.remove(bala)
                     venga.vidas -= 1
+                    self.score += venga.score
                     if venga.vidas == 0:
                         lsta_enemigos.remove(venga)
 
@@ -395,6 +396,7 @@ class MyGame(arcade.View):
                 self.Vidas -= 1
                 arcade.play_sound(self.hit_sound)
                 enemy1bullet.remove_from_sprite_lists()
+                self.score -= 20
                 if self.Vidas <= 0:
                     self.perder()
 
@@ -405,12 +407,25 @@ class MyGame(arcade.View):
         :param lsta_persecucion : lista cuyos elementos deben tener un atributo llamado sprite:
         :return void:
         """
-        for acoso in lista_persecuion:  # Para chequear las colisiones entre las balas que rebotan y la nace
+        for acoso in lista_persecuion:  # Para chequear las colisiones entre persecutores y la nave
             if arcade.check_for_collision(self.nave_sprite, acoso.sprite):
                 self.Vidas -= 1
                 lista_persecuion.remove(acoso)
+                self.score -= 35
                 if self.Vidas <= 0:
                     self.perder()
+
+    def colision_naveSoS(self, lista_persecuion):
+        """
+        Comprueba las colisiones entre el jugador y naves que le curen
+        lista ---> void
+        :param lsta_persecucion : lista cuyos elementos deben tener un atributo llamado sprite:
+        :return void:
+        """
+        for acoso in lista_persecuion:  # Para chequear las colisiones entre las curas y la nave
+            if arcade.check_for_collision(self.nave_sprite, acoso.sprite):
+                self.Vidas += 1    # Las naves de esta lista curan vida
+                lista_persecuion.remove(acoso)
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -501,8 +516,8 @@ class MyGame(arcade.View):
                 i.sprite.draw()
 
         if len(self.lista3) > 0:
-            for t in self.lista3:
-                t.sprite.draw()
+            for s in self.lista3:
+                s.sprite.draw()
 
         if len(self.lista_lintera) > 0:
             for k in self.lista_lintera:
@@ -631,10 +646,10 @@ class MyGame(arcade.View):
             self.colision_persecucion(self.lista_bala)
 
         if len(self.lista3) > 0:
-            for l in self.lista3:
-                l.movimiento()
+            for k in self.lista3:
+                k.sprite.update()
+            self.colision_naveSoS(self.lista3)
             self.colisiones_sprites(self.lista3)
-            self.colision_persecucion(self.lista3)
 
         if len(self.lista_lintera) > 0:
             for k in self.lista_lintera:

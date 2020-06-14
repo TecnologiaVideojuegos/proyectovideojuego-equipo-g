@@ -24,6 +24,7 @@ class Mosquito(Enemy):  # Clase Mosquito
         self.vidas = 4
         self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
         self.sprite = self.sprite_animacion[0]
+        self.score = 50
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
@@ -69,6 +70,7 @@ class Bala_Rebot():
         self.contador_animacion = 0
         self.sprite = self.sprite_animacion[0]
         self.vidas = 2
+        self.score = 25
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
@@ -121,6 +123,7 @@ class Huevo():
                                  arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "hueva_2.png", center_x=self.cor_x, center_y=self.cor_y),
                                  arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "hueva_3.png", center_x=self.cor_x, center_y=self.cor_y)]
         self.sprite = self.sprite_animacion[self.animacion]
+        self.score = 23
 
     def movimiento(self):
         self.contador += 1
@@ -154,6 +157,7 @@ class Mosquito_Elite(Enemy):  # Clase Mosquito De Elite
         # 2 sprites separados, de esta forma se consigue determinar una mejor hit-box
         self.sprite_arriba = self.sprite_animacion[0]
         self.vidas = 25
+        self.score = 55
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
@@ -256,6 +260,7 @@ class Trimandibula(Enemy):
         self.espera = False
         self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Trimandibulabullet.png", center_x=self.cor_x, center_y=self.cor_y)
         self.vidas = 5
+        self.score = 70
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
@@ -358,6 +363,7 @@ class Cria(Seguimiento):
         self.contador = 0
         self.variacion = 10
         self.vidas = 1
+        self.score = 100
 
     def movimiento(self, sprite):
         self.contador += 1  # lleva a cabo la animacion
@@ -374,6 +380,7 @@ class NaveSOS(Enemy):
         self.cor_y = 800
         self.vidas = 1
         self.sprite = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "Nave_ayuda.png", 1.25)
+        self.score = -100
 
     def movimiento(self):
         self.cor_y -= 3
@@ -391,6 +398,7 @@ class Pez_Linterna():
         self.lista_balas = []
         self.lista_torretas = []
         self.creaTorretas()
+        self.score = 50
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
@@ -493,6 +501,7 @@ class Misil(Cria):
         self.contador = 0
         self.variacion = 0
         self.vidas = 4
+        self.score = 100
 
 class Nave_enemiga(Enemy):
     def __init__(self):
@@ -509,6 +518,7 @@ class Nave_enemiga(Enemy):
         self.velocidad_y = 3
         self.listo_disparo = True
         self.numero_balas = 0  # Indicará el numero de balas disparadas
+        self.score = 125
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
@@ -607,6 +617,7 @@ class Jefe_Final():
         self.bala = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"RedBullet.png", center_x=self.cor_x, center_y=self.cor_y)
         self.vidas = 30
         self.lista_misiles = []
+        self.score = 150
 
     def movimiento(self):
         if self.direc == 1:  # cambia las coordenadas del enemigo
