@@ -17,7 +17,7 @@ MUSIC_VOLUME = 0.5
 """Para que no se sobrecargue todo de balas he puesto que haya un limite de balas en pantalla"""
 MAX_PLAYER_BULLETS = 5
 MAX_ENEMY1_BULLETS = 1
-BULLET_SPEED = 7
+BULLET_SPEED = 5
 
 def bordes():
     """" Los bordes para poner imagenes en ellos la puntuacion etc """
