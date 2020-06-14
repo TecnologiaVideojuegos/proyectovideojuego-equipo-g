@@ -610,8 +610,8 @@ class MyGame(arcade.View):
                 for h in i.lista_mosquitos:
                     h.movimiento()
                     h.lista_balas.update()
+                    self.colisiones_lista_balas(h.lista_balas)
                 self.colisiones_sprites(i.lista_mosquitos)
-                self.colsiones_bala_mosquito(i.lista_mosquitos)
                 self.colisiones_sprites(i.lista_crias)
 
         if len(self.lista_mosquito) > 0:
