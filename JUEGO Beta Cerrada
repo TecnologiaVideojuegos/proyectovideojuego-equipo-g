@@ -328,7 +328,7 @@ class MyGame(arcade.View):
         self.nave_sprite.center_y = 125
         for i in range(2):
             enem8 = Enemigos.Escudo()
-            self.lista_jefeFinal.append(enem8)
+            self.lista_barrera.append(enem8)
         for j in range(2):
             enem9 = Enemigos.Nave_enemiga()
             self.lista_mosquito.append(enem9)
