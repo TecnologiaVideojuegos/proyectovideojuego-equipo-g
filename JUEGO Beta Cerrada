@@ -192,9 +192,9 @@ class MyGame(arcade.View):
         self.lista_elite = []
         self.lista_mosquito = []
         self.lista_persecutora = []
-        self.lista_trimandibula = []
         self.lista_bala = []
-        self.lista_cria = []
+        self.lista_lintera = []
+        self.lista_barrera = []
         self.lista3 = []
         self.nivel_1()
         self.nave_sprite = nave(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "NewNave.png", SPRITE_SCALING_NAVE)
@@ -278,7 +278,7 @@ class MyGame(arcade.View):
             self.enemy_list.append(enemy1)
         for m in range(4):
             enemy5 = Enemigos.Trimandibula()
-            self.lista_trimandibula.append(enemy5)
+            self.lista_mosquito.append(enemy5)
 
     def nivel_7(self):
         for i in range(0):
@@ -288,7 +288,7 @@ class MyGame(arcade.View):
             self.enemy_list.append(enemy1)
         for n in range(6):
             enemy6 = Enemigos.Cria()
-            self.lista_cria.append(enemy6)
+            self.lista_persecutora.append(enemy6)
 
     def nivel_8(self):
         for i in range(10):
@@ -301,7 +301,7 @@ class MyGame(arcade.View):
             self.lista3.append(enemy4)
         for m in range(2):
             enemy5 = Enemigos.Trimandibula()
-            self.lista_trimandibula.append(enemy5)
+            self.lista_mosquito.append(enemy5)
 
     def nivel_9(self):
         for i in range(8):
@@ -311,17 +311,15 @@ class MyGame(arcade.View):
             self.enemy_list.append(enemy1)
         for m in range(3):
             enemy5 = Enemigos.Trimandibula()
-            self.lista_trimandibula.append(enemy5)
+            self.lista_mosquito.append(enemy5)
         for n in range(6):
             enemy6 = Enemigos.Cria()
-            self.lista_cria.append(enemy6)
+            self.lista_persecutora.append(enemy6)
 
     def nivel_10(self):
         for i in range(1):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
-            enemy1.center_x = random.randrange(340, 1200)
-            enemy1.center_y = random.randrange(400, 790)
-            self.enemy_list.append(enemy1)
+            enem7 = Enemigos.Pez_Linterna()
+            self.lista_lintera.append(enem7)
 
     def nivel_11(self):
         self.nave_sprite.center_x = 750
@@ -387,21 +385,6 @@ class MyGame(arcade.View):
                     venga.vidas -= 1
                     if venga.vidas == 0:
                         lsta_enemigos.remove(venga)
-
-    def colsiones_bala_mosquito(self, lsta_mosquitos):
-        """
-        Comprueba las colisiones entre las balas del los enemigos tipo mosquito y el jugador
-        lista ---> void
-        :param lsta_mosquitos : lista cuyos elementos deben tener un atributo llamado bala:
-        :return void:
-        """
-        for s in lsta_mosquitos:  # Revisa colisiones entre los sprites llamados bala y el jugador
-            colision = arcade.check_for_collision_with_list(s.bala, self.nave_list)
-            for self.nave_sprite in colision:
-                s.lista_balas.pop()
-                self.Vidas -= 1
-                if self.Vidas <= 0:
-                    self.perder()
 
     def colisiones_lista_balas(self, lista_balas):
         """
@@ -517,10 +500,6 @@ class MyGame(arcade.View):
             for s in self.lista_persecutora:
                 s.sprite.draw()
 
-        if len(self.lista_cria) > 0:
-            for l in self.lista_cria:
-                l.sprite.draw()
-
         if len(self.lista_bala) > 0:
             for i in self.lista_bala:
                 i.sprite.draw()
@@ -529,11 +508,18 @@ class MyGame(arcade.View):
             for t in self.lista3:
                 t.sprite.draw()
 
-        if len(self.lista_trimandibula) > 0:
-            for j in self.lista_trimandibula:
-                j.sprite.draw()
-                j.lista_balas.draw()
+        if len(self.lista_lintera) > 0:
+            for k in self.lista_lintera:
+                k.sprite.draw()
+                for s in k.lista_balas:
+                    s.sprite.draw()
+                for j in k.lista_torretas:
+                    j.sprite.draw()
+                    j.lista_balas.draw()
 
+        if len(self.lista_barrera) > 0:
+            for k in self.lista_barrera:
+                k.sprite.draw()
 
     def on_key_press(self, key, modifiers):
         """La programacion de movimiento tanto si quieres moverlo con WASD como si quieres moverlo con las letras"""
@@ -614,12 +600,6 @@ class MyGame(arcade.View):
             self.colision_persecucion(self.lista_persecutora)
             self.colisiones_sprites(self.lista_persecutora)
 
-        if len(self.lista_cria) > 0:
-            for l in self.lista_cria:
-                l.movimiento(self.nave_sprite)
-            self.colision_persecucion(self.lista_cria)
-            self.colisiones_sprites(self.lista_cria)
-
         if len(self.lista_elite) > 0:
             for i in self.lista_elite:
                 i.movimiento()
@@ -637,15 +617,8 @@ class MyGame(arcade.View):
             for k in self.lista_mosquito:
                 k.movimiento()
                 k.lista_balas.update()
-            self.colisiones_sprites(self.lista_mosquito)
+                self.colisiones_lista_balas(k.lista_balas)
             self.colsiones_bala_mosquito(self.lista_mosquito)
-
-        if len(self.lista_trimandibula) > 0:
-            for j in self.lista_trimandibula:
-                j.movimiento()
-                j.lista_balas.update()
-                self.colisiones_sprites(self.lista_trimandibula)
-                self.colisiones_lista_balas(j.lista_balas)
 
         if len(self.lista_bala) > 0:
             for r in self.lista_bala:
@@ -658,6 +631,25 @@ class MyGame(arcade.View):
                 l.movimiento()
             self.colisiones_sprites(self.lista3)
             self.colision_persecucion(self.lista3)
+
+        if len(self.lista_lintera) > 0:
+            for k in self.lista_lintera:
+                k.movimiento()
+                k.sprite.update()
+                self.colisiones_sprites(self.lista_lintera)
+                for j in k.lista_balas:
+                    j.movimiento()
+                self.colisiones_sprites(k.lista_balas)
+                self.colision_persecucion(k.lista_balas)
+                for r in k.lista_torretas:
+                    r.movimiento()
+                    r.lista_balas.update()
+                    self.colisiones_lista_balas(r.lista_balas)
+
+        if len(self.lista_barrera) > 0:
+            for k in self.lista_barrera:
+                k.movimiento()
+            self.colisiones_sprites(self.lista_barrera)
 
 
         """Para calculaar la velocidad segun las teclas que pulses"""
@@ -756,19 +748,19 @@ class MyGame(arcade.View):
             self.nivel += 1
             self.nivel_6()
             self.Vidas += 1
-        elif len(self.lista_trimandibula) == 0 and self.nivel == 6:
+        elif len(self.lista_mosquito) == 0 and self.nivel == 6:
             self.nivel += 1
             self.nivel_7()
-        elif len(self.lista_cria) == 0  and self.nivel == 7:
+        elif len(self.lista_persecutora) == 0  and self.nivel == 7:
             self.nivel += 1
             self.nivel_8()
-        elif len(self.enemy_list) == 0 and len(self.lista_trimandibula) == 0 and self.nivel == 8:
+        elif len(self.enemy_list) == 0 and len(self.lista_mosquito) == 0 and self.nivel == 8:
             self.nivel += 1
             self.nivel_9()
-        elif len(self.enemy_list) == 0 and len(self.lista_trimandibula) == 0 and len(self.lista_cria) == 0  and self.nivel == 9:
+        elif len(self.enemy_list) == 0 and len(self.lista_mosquito) == 0 and len(self.lista_persecutora) == 0  and self.nivel == 9:
             self.nivel += 1
             self.nivel_10()
-        elif len(self.enemy_list) == 0 and self.nivel == 10:
+        elif len(self.lista_lintera) == 0 and self.nivel == 10:
             intermedio2_view = Intermedio2View(self)
             self.window.show_view(intermedio2_view)
             self.nivel += 1
