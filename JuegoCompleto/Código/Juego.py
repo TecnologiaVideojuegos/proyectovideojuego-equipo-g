@@ -563,7 +563,7 @@ class MyGame(arcade.View):
         if key == arcade.key.SPACE:
             if len(self.bullet_list) < MAX_PLAYER_BULLETS:
                 arcade.play_sound(self.gun_sound)
-                bullet = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "space_shooter" + os.path.sep + "laserBlue01.png", SPRITE_SCALING_BULLET)
+                bullet = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "laserBlue01.png", SPRITE_SCALING_BULLET)
                 bullet.angle = 90
                 bullet.change_y = BULLET_SPEED
                 bullet.center_x = self.nave_sprite.center_x
