@@ -9,6 +9,8 @@ Para estructurar los enemigos se ideó un sistema de rondas, cada ronda contiene
 
 Hollow Riders contiene un total de 15 rondas, teniendo 3 jefes y siendo el de la ronda 15 el jefe final. Cada vez que se derrota a un jefe se cuenta un poco de la trama del jeugo y se pasa de escenario. La trama es muy sencilla y tan solo sirve de contecto para poner en situación al jugador. Una vez terminado el juego se muestra la pantalla final con la puntuación conseguida y el tiempo invertido. 
 
+
+
 *Apartado gráfico*
 
 El apartado artístico del juego es pura ciencia ficción. Se ha mantenido un estilo futurista para todo lo que tiene que ver con el protagonista y un estilo alienígena para todos los enemigos. 
@@ -16,6 +18,8 @@ El apartado artístico del juego es pura ciencia ficción. Se ha mantenido un es
 El videojuego presenta 2 estilos completamente distintos. Todos los sprites están hechos a pixel art mientras que las imágenes de fondo han sido editadas mediante photoshop. Esto se debe a la gran diferenciación entre los estilos artísticos de los dos diseñadores gráficos. Esta diferenciación ha sido de gran utilidad ya que ambos estilos se complementaban. De manera coordianda se ha querido trasmitir una ambientación futurista y la idea de un viaje. A medida que se avanza los fondos van cambiando mostrando en primer lugar una ciudad y terminando en el espacio.
 
 Todo el apartado visual es completamente original; ha sido creado y editado por los miembros del grupo.
+
+
 
 *Apartado sonoro*
 
