@@ -25,6 +25,8 @@ Todo el apartado visual es completamente original; ha sido creado y editado por 
 
 En este aspecto el equipo debe disculparse. Ninguno de nosotros cuenta con los conocimientos suficientes para trabajar con archivos de audio. El juego no cuenta con música y los pocos efectos sonoros que tiene son reciclados de los recursos que ofrece la librería arcade por defecto. 
 
+
+
 **Ideas descartadas y desarrollo del juego**
 
 En las primeras semanas del curso se tuvieron ideas muy ambiciosas. Se planteó seriamente añadir varios tipos de armas que afectarían al disparo del jugador y como gestionar los distintos enemigos. También se planteó la idea del scrolling, cosa que habría afectado en gran medida a la gestión de los enemigos. Estas ideas no llegaron a la luz debido a un importante factor:
