@@ -26,6 +26,9 @@ Todo el apartado visual es completamente original; ha sido creado y editado por 
 En este aspecto el equipo debe disculparse. Ninguno de nosotros cuenta con los conocimientos suficientes para trabajar con archivos de audio. El juego no cuenta con música y los pocos efectos sonoros que tiene son reciclados de los recursos que ofrece la librería arcade por defecto. 
 
 
+*Apartado técnico*
+
+La mayoría de bugs encontrados en el desarrollo se han solucionado fácilmente. No obstante, hay un error que hemos arrastrado y no hemos sabido solucionarlo. En todas las transiciones de la historia, si se pulsa cualquiera de las teclas de movimiento el juego no sabe del todo como reaccionar y lleva a un error que impide al jugador seguir adelante.
 
 **Ideas descartadas y desarrollo del juego**
 
