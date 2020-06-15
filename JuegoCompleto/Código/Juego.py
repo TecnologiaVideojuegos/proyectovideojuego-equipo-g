@@ -831,7 +831,7 @@ class Intermedio1View(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0, 1500, 800, self.FondoHistoria)
         arcade.draw_text("HOLLOW RIDERS", 750, 700, arcade.color.CYBER_YELLOW, font_size=70, anchor_x="center")
         arcade.draw_text(
-            "Tras derrotar la primera oleada de enemigos que atacaba el nucleo de la ciudad, el ejercito caladino se dirije hacia la naves de asalto\nde los Isithsaba que estaban preparando una segunda oleada, el contraataque impedira a los Isithsaba seguir detruyendo la ciudad y\nllevara el combate a su terreno, si el contraataque falla podria ser el fin de los caladinos.",
+            "Tras derrotar la primera oleada de enemigos que atacaba el nucleo de la ciudad, el ejército caladino se dirije hacia la naves de asalto\nde los Isithsaba que estaban preparando una segunda oleada, el contraataque impedira a los Isithsaba seguir detruyendo la ciudad y\nllevará el combate a su terreno, si el contraataque falla podría ser el fin de los caladinos.",
             750, 550, arcade.color.CYBER_YELLOW, font_size=20, anchor_x="center")
         arcade.draw_text("<Click para continuar>", SCREEN_WIDTH / 2, 300, arcade.color.CYBER_YELLOW, font_size=25,
                          anchor_x="center")
@@ -853,9 +853,9 @@ class Intermedio2View(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0, 1500, 800, self.FondoHistoria)
         arcade.draw_text("HOLLOW RIDERS", 750, 700, arcade.color.CYBER_YELLOW, font_size=70, anchor_x="center")
         arcade.draw_text(
-            "El contrataque ha sido exitoso, tras derrotar al comandante Isithsaba, Ukoyisa las tropas invasoras se baten en retirada hacia el nucleo de su flota\nlos caladinos mantienen su ofensiva para no perder la iniciativa, no quieren dejar reagruparse a las tropas enemigas y persiguen a los enemigos\nen retirada hasta su fuerza principal"
+            "El contrataque ha sido exitoso, tras derrotar al comandante Isithsaba, Ukoyisa las tropas invasoras se baten en retirada hacia el nÚcleo de su flota\nlos caladinos mantienen su ofensiva para no perder la iniciativa, no quieren dejar reagruparse a las tropas enemigas y persiguen a los enemigos\nen retirada hasta su fuerza principal"
             , 750, 550, arcade.color.CYBER_YELLOW, font_size=20, anchor_x="center")
-        arcade.draw_text("LA VERDADERA BATALLA ESTA POR COMENZAR", SCREEN_WIDTH/2, 400, arcade.color.CYBER_YELLOW, font_size= 40, anchor_x="center")
+        arcade.draw_text("LA VERDADERA BATALLA ESTÁ POR COMENZAR", SCREEN_WIDTH/2, 400, arcade.color.CYBER_YELLOW, font_size= 40, anchor_x="center")
         arcade.draw_text("<Click para continuar>", SCREEN_WIDTH / 2, 300, arcade.color.CYBER_YELLOW, font_size=25, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _buttom, _modifiers):
@@ -874,7 +874,7 @@ class IntermedioFinalView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0, 1500, 800, self.FondoHistoria)
         arcade.draw_text("HOLLOW RIDERS", 750, 700, arcade.color.CYBER_YELLOW, font_size=70, anchor_x="center")
         arcade.draw_text(
-            "Han pasado varias horas desde el comienzo de la batalla y los caladinos estan haciendo retroceder cada vez mas a los Isithsaba,\n parece que la victoria esta al alcanze de los caladinos, pero entonces el general Ingqondo decidio unirse al combate\nen un ultimo intento de los Isithsaba por retomar la ofensiva, mirando fijamente a esos ojos inyectados en sangre, el destino\nde Spe y sus habitantes se decidira en un ultimo combate."
+            "Han pasado varias horas desde el comienzo de la batalla y los caladinos están haciendo retroceder cada vez más a los Isithsaba,\n parece que la victoria está al alcanze de los caladinos, pero entonces el general Ingqondo decidio unirse al combate\nen un ultimo intento de los Isithsaba por retomar la ofensiva, mirando fijamente a esos ojos inyectados en sangre, el destino\nde Spe y sus habitantes se decidirá en un último combate."
             , 650, 550, arcade.color.CYBER_YELLOW, font_size=20, anchor_x="center")
         arcade.draw_text("<Click para continuar>", SCREEN_WIDTH / 2, 300, arcade.color.CYBER_YELLOW, font_size=25, anchor_x="center")
 
