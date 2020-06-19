@@ -188,7 +188,7 @@ class MyGame(arcade.View):
         self.background10 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "JefePezLinternaFondo.jpg")
         self.score = 0
         self.Vidas = 3
-        self.nivel = 1
+        self.nivel = 1 # PAra testear ciertos niveles tan solo hay que cambiar esta variable
         self.time_taken = 0
         self.lista_elite = []
         self.lista_mosquito = []
@@ -712,6 +712,11 @@ class MyGame(arcade.View):
             """Cuando estas a cero vidas no puedes disparar"""
             if self.Vidas <= 0:
                 bullet.remove_from_sprite_lists()
+
+        for s in self.bullet_list:
+            if s.center_y > 810:
+                self.bullet_list.remove(s)
+
         self.bullet_list.update()
 
 
