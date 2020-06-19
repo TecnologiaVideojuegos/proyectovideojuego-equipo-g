@@ -22,8 +22,8 @@ BULLET_SPEED = 5
 def bordes():
     """" Los bordes para poner imagenes en ellos la puntuacion etc """
 
-    arcade.draw_lrwh_rectangle_textured(0, 0, 200, 867, arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"Layout.jpg"))
-    arcade.draw_lrwh_rectangle_textured(1300, 0, 200, 800, arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"LayoutDerecha.jpg"))
+    arcade.draw_lrwh_rectangle_textured(0, 0, 200, 867, arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep +"Layout.jpg"))
+    arcade.draw_lrwh_rectangle_textured(1300, 0, 200, 800, arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep +"LayoutDerecha.jpg"))
 
 
 class Explosion(arcade.Sprite):
@@ -64,8 +64,8 @@ class StartView(arcade.View):
 
     def __init__(self):
         super().__init__()
-        self.FondoMenuPrincipal = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"FondoMenuPrincipal.jpg")
-        self.Logo = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "LogoEquipoVideojuegos2.png")
+        self.FondoMenuPrincipal = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep +"FondoMenuPrincipal.jpg")
+        self.Logo = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "LogoEquipoVideojuegos2.png")
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
 
@@ -88,7 +88,7 @@ class StartView(arcade.View):
 class MenuView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.FondoMenuPrincipal = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"FondoMenuPrincipal.jpg")
+        self.FondoMenuPrincipal = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep +"FondoMenuPrincipal.jpg")
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -116,7 +116,7 @@ class HistoriaView(arcade.View):
     """Pantalla para dar comiendo al juego"""
 
     def on_show(self):
-        self.FondoHistoria = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoEspacioPlaneta.jpg")
+        self.FondoHistoria = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoEspacioPlaneta.jpg")
 
     def on_draw(self):
         arcade.start_render()
@@ -137,7 +137,7 @@ class ControlesView(arcade.View):
     """Pantalla para dar comiendo al juego"""
 
     def on_show(self):
-        self.FondoMenuPrincipal = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep +"FondoMenuPrincipal.jpg")
+        self.FondoMenuPrincipal = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep +"FondoMenuPrincipal.jpg")
 
     def on_draw(self):
         arcade.start_render()
@@ -176,16 +176,16 @@ class MyGame(arcade.View):
         self.nave_sprite = arcade.SpriteList()
         self.explosions_list = arcade.SpriteList()
         self.enemybullet_list = arcade.SpriteList()
-        self.background1 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoMarino.jpg")
-        self.background2 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoMarino2.jpg")
-        self.background3 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoMarino3.jpg")
-        self.background4 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "NaveCayendose.jpg")
-        self.background5 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "NaveCayendose2.jpg")
-        self.background6 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "NaveCayendose3.jpg")
-        self.background7 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoGalaxia.jpg")
-        self.background8 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoGalaxia2.jpg")
-        self.background9 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoGalaxia3.jpg")
-        self.background10 = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "JefePezLinternaFondo.jpg")
+        self.background1 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoMarino.jpg")
+        self.background2 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoMarino2.jpg")
+        self.background3 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoMarino3.jpg")
+        self.background4 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "NaveCayendose.jpg")
+        self.background5 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "NaveCayendose2.jpg")
+        self.background6 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "NaveCayendose3.jpg")
+        self.background7 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoGalaxia.jpg")
+        self.background8 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoGalaxia2.jpg")
+        self.background9 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoGalaxia3.jpg")
+        self.background10 = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "JefePezLinternaFondo.jpg")
         self.score = 0
         self.Vidas = 3
         self.nivel = 1
@@ -199,7 +199,7 @@ class MyGame(arcade.View):
         self.lista_jefeFinal = []
         self.lista3 = []
         self.nivel_1()
-        self.nave_sprite = nave(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "NewNave.png", SPRITE_SCALING_NAVE)
+        self.nave_sprite = nave("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "NewNave.png", SPRITE_SCALING_NAVE)
         self.nave_sprite.center_x = 750
         self.nave_sprite.center_y = 125
         self.nave_list.append(self.nave_sprite)
@@ -217,8 +217,8 @@ class MyGame(arcade.View):
         explosion = ":resources:images/spritesheets/explosion.png"
         self.explosion_texture_list = arcade.load_spritesheet(explosion, sprite_width, sprite_height, columns, count)
 
-        self.gun_sound = arcade.load_sound(":resources:" + os.path.sep + "sounds" + os.path.sep +"hurt5.wav")
-        self.hit_sound = arcade.load_sound(":resources:" + os.path.sep + "sounds" + os.path.sep +"hit5.wav")
+        self.gun_sound = arcade.load_sound("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep +"hurt5.wav")
+        self.hit_sound = arcade.load_sound("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep +"hit5.wav")
 
         arcade.set_background_color(arcade.color.BLACK)
 
@@ -226,21 +226,21 @@ class MyGame(arcade.View):
     def nivel_1(self):
         for i in range(3):
             """Aparicion de enemigos en posiciones randomizadas dentro de unas cordenadas"""
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
 
     def nivel_2(self):
         for i in range(7):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
 
     def nivel_3(self):
         for i in range(10):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
@@ -253,7 +253,7 @@ class MyGame(arcade.View):
 
     def nivel_4(self):
         for i in range(15):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
@@ -280,7 +280,7 @@ class MyGame(arcade.View):
 
     def nivel_8(self):
         for i in range(10):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
@@ -293,7 +293,7 @@ class MyGame(arcade.View):
 
     def nivel_9(self):
         for i in range(8):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1140)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
@@ -329,7 +329,7 @@ class MyGame(arcade.View):
 
     def nivel_13(self):
         for i in range(5):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
@@ -342,7 +342,7 @@ class MyGame(arcade.View):
 
     def nivel_14(self):
         for i in range(6):
-            enemy1 = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
+            enemy1 = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "BichoMalo.png", SPRITE_SCALING_ENEMY)
             enemy1.center_x = random.randrange(340, 1200)
             enemy1.center_y = random.randrange(400, 790)
             self.enemy_list.append(enemy1)
@@ -563,7 +563,7 @@ class MyGame(arcade.View):
         if key == arcade.key.SPACE:
             if len(self.bullet_list) < MAX_PLAYER_BULLETS:
                 arcade.play_sound(self.gun_sound)
-                bullet = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "laserBlue01.png", SPRITE_SCALING_BULLET)
+                bullet = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "laserBlue01.png", SPRITE_SCALING_BULLET)
                 bullet.angle = 90
                 bullet.change_y = BULLET_SPEED
                 bullet.center_x = self.nave_sprite.center_x
@@ -597,7 +597,7 @@ class MyGame(arcade.View):
         """Sistema de disparo totalmente vertical que se ejecuta si pulsas el boton izq del raton"""
         if len(self.bullet_list) < MAX_PLAYER_BULLETS:
             arcade.play_sound(self.gun_sound)
-            bullet = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "laserBlue01.png", SPRITE_SCALING_BULLET)
+            bullet = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "laserBlue01.png", SPRITE_SCALING_BULLET)
             bullet.angle = 90
             bullet.change_y = BULLET_SPEED
             bullet.center_x = self.nave_sprite.center_x
@@ -728,7 +728,7 @@ class MyGame(arcade.View):
 
             """Los enemigos te apuntan y no disparan todos a la vez si no en una franja de tiempo"""
             if random.randrange(120) == 0:
-                enemy1bullet = arcade.Sprite(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "laserRed01.png", SPRITE_SCALING_BULLET)
+                enemy1bullet = arcade.Sprite("." + os.path.sep + ".." + os.path.sep + "Sprites" + os.path.sep + "laserRed01.png", SPRITE_SCALING_BULLET)
                 enemy1bullet.center_x = start_x
                 enemy1bullet.center_y = start_y
                 enemy1bullet.angle = math.degrees(angle)
@@ -824,7 +824,7 @@ class Intermedio1View(arcade.View):
         self.game_view = game_view
 
     def on_show(self):
-        self.FondoHistoria = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoEspacioPlaneta.jpg")
+        self.FondoHistoria = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoEspacioPlaneta.jpg")
 
     def on_draw(self):
         arcade.start_render()
@@ -846,7 +846,7 @@ class Intermedio2View(arcade.View):
         self.game_view = game_view
 
     def on_show(self):
-        self.FondoHistoria = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoEspacioPlaneta.jpg")
+        self.FondoHistoria = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoEspacioPlaneta.jpg")
 
     def on_draw(self):
         arcade.start_render()
@@ -867,7 +867,7 @@ class IntermedioFinalView(arcade.View):
         self.game_view = game_view
 
     def on_show(self):
-        self.FondoHistoria = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoEspacioPlaneta.jpg")
+        self.FondoHistoria = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoEspacioPlaneta.jpg")
 
     def on_draw(self):
         arcade.start_render()
@@ -886,7 +886,7 @@ class PauseView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
         self.game_view = game_view
-        self.backgroundVictoria = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoVictoria.jpg")
+        self.backgroundVictoria = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoVictoria.jpg")
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -916,7 +916,7 @@ class GameOverView(arcade.View):
     def __init__(self):
         super().__init__()
         self.time_taken = 0
-        self.backgroundGameOver = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoGameOver.jpg")
+        self.backgroundGameOver = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoGameOver.jpg")
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -948,7 +948,7 @@ class VictoriaView(arcade.View):
     def __init__(self):
         super().__init__()
         self.time_taken = 0
-        self.backgroundVictoria = arcade.load_texture(":resources:" + os.path.sep + "images" + os.path.sep + "practicas" + os.path.sep + "FondoVictoria.jpg")
+        self.backgroundVictoria = arcade.load_texture("." + os.path.sep + ".." + os.path.sep + "Fondos JPG" + os.path.sep + "FondoVictoria.jpg")
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
